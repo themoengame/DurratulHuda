@@ -201,7 +201,7 @@
             flex: 1;
         }
 
-        /* Konten Halaman */
+        /* Konten Halaman - perbaikan untuk grid Asmaul Husna */
         .content-page {
             direction: rtl;
             font-family: inherit;
@@ -225,6 +225,42 @@
             text-align: center;
             margin: 20px 0 10px;
             color: var(--accent);
+        }
+
+        /* GRID UNTUK ASMAUL HUSNA - RESPONSIF */
+        .asma-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px 20px;
+            margin: 20px 0;
+            line-height: 1.8;
+        }
+        
+        .asma-item {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            padding: 2px 0;
+            white-space: normal;
+            word-break: keep-all;
+        }
+        
+        .asma-bullet {
+            color: var(--accent);
+            font-size: 1.1em;
+            margin-left: 4px;
+            flex-shrink: 0;
+        }
+        
+        .asma-name {
+            flex: 1;
+        }
+
+        @media (max-width: 550px) {
+            .asma-grid {
+                grid-template-columns: 1fr;
+                gap: 4px;
+            }
         }
 
         .no-result {
@@ -276,7 +312,6 @@
     </div>
 
     <div id="mainContent">
-        <!-- Daftar isi akan di-render di sini -->
         <div class="toc-list" id="tocContainer">Memuat daftar isi...</div>
     </div>
 
@@ -355,58 +390,54 @@
     let currentFontSize = 18;
     let currentFontFamily = "'Traditional Arabic', 'Sakkal Majalla', 'Times New Roman', serif";
     let currentTheme = 'light';
-    let currentPage = null; // null = daftar isi, 'asmaulhusna' atau lainnya
+    let currentPage = null;
 
-    // Cache data.json
-    let pageData = {};
+    // Data Asmaul Husna yang rapi (tanpa <br>)
+    const asmaulHusnaList = [
+        "الرَّحْمٰنُ", "الرَّحِيْمُ", "الْمَلِكُ", "الْقُدُّوْسُ", "السَّلَامُ", "الْمُؤْمِنُ",
+        "الْمُهَيْمِنُ", "الْعَزِيْزُ", "الْجَبَّارُ", "الْمُتَكَبِّرُ", "الْخَالِقُ", "الْبَارِئُ",
+        "الْمُصَوِّرُ", "الْغَفَّارُ", "الْقَهَّارُ", "الْوَهَّابُ", "الرَّزَّاقُ", "الْفَتَّاحُ",
+        "الْعَلِيْمُ", "الْقَابِضُ", "الْبَاسِطُ", "الْخَافِضُ", "الرَّافِعُ", "الْمُعِزُّ",
+        "الْمُذِلُّ", "السَّمِيْعُ", "الْبَصِيْرُ", "الْحَكَمُ", "الْعَدْلُ", "اللَّطِيْفُ",
+        "الْخَبِيْرُ", "الْحَلِيْمُ", "الْعَظِيْمُ", "الْغَفُوْرُ", "الشَّكُوْرُ", "الْعَلِيُّ",
+        "الْكَبِيْرُ", "الْحَفِيْظُ", "الْمُقِيْتُ", "الْحَسِيْبُ", "الْجَلِيْلُ", "الْكَرِيْمُ",
+        "الرَّقِيْبُ", "الْمُجِيْبُ", "الْوَاسِعُ", "الْحَكِيْمُ", "الْوَدُوْدُ", "الْمَجِيْدُ",
+        "الْبَاعِثُ", "الشَّهِيْدُ", "الْحَقُّ", "الْوَكِيْلُ", "الْقَوِيُّ", "الْمَتِيْنُ",
+        "الْوَلِيُّ", "الْحَمِيْدُ", "الْمُحْصِيْ", "الْمُبْدِئُ", "الْمُعِيْدُ", "الْمُحْيِيْ",
+        "الْمُمِيْتُ", "الْحَيُّ", "الْقَيُّوْمُ", "الْوَاجِدُ", "الْمَاجِدُ", "الْوَاحِدُ",
+        "الْأَحَدُ", "الصَّمَدُ", "الْقَادِرُ", "الْمُقْتَدِرُ", "الْمُقَدِّمُ", "الْمُؤَخِّرُ",
+        "الْأَوَّلُ", "الْآخِرُ", "الظَّاهِرُ", "الْبَاطِنُ", "الْوَالِيْ", "الْمُتَعَالِيْ",
+        "الْبَرُّ", "التَّوَّابُ", "الْمُنْتَقِمُ", "الْعَفُوُّ", "الرَّؤُوْفُ", "مَالِكُ الْمُلْكِ",
+        "ذُو الْجَلَالِ وَالْإِكْرَامِ", "الْمُقْسِطُ", "الْجَامِعُ", "الْغَنِيُّ", "الْمُغْنِيْ",
+        "الْمَانِعُ", "الضَّارُّ", "النَّافِعُ", "النُّوْرُ", "الْهَادِيْ", "الْبَدِيْعُ",
+        "الْبَاقِيْ", "الْوَارِثُ", "الرَّشِيْدُ", "الصَّبُوْرُ"
+    ];
 
-    // Load data.json
-    async function loadPageData() {
-        try {
-            const response = await fetch('data.json');
-            if (response.ok) {
-                pageData = await response.json();
-                console.log('Data loaded:', Object.keys(pageData.pages || {}));
-            } else {
-                console.warn('data.json not found, using fallback');
-                // Fallback untuk asmaulhusna
-                pageData.pages = pageData.pages || {};
-                if (!pageData.pages['الأسماء الحسنى']) {
-                    pageData.pages['الأسماء الحسنى'] = getFallbackAsmaulHusna();
-                }
-            }
-        } catch (error) {
-            console.error('Error loading data.json:', error);
-            pageData.pages = { 'الأسماء الحسنى': getFallbackAsmaulHusna() };
+    // Generate HTML untuk Asmaul Husna dengan grid responsif
+    function getAsmaulHusnaHTML() {
+        let itemsHTML = '';
+        for (let i = 0; i < asmaulHusnaList.length; i++) {
+            itemsHTML += `
+                <div class="asma-item">
+                    <span class="asma-bullet">۞</span>
+                    <span class="asma-name">${asmaulHusnaList[i]}</span>
+                </div>
+            `;
         }
-    }
-
-    function getFallbackAsmaulHusna() {
-        return `<div class='arabic-text'>
-            <p class='basmalah'>بِسْمِ اللهِ الرَّحْمنِ الرَّحِيْمِ</p>
-            <p>نَسْاَلُكَ يَا مَنْ هُوَ اللهُ الَّذِيْ لاَ إِلٰهَ إِلاَّ هُوَ</p>
-            <div style='display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:20px 0;'>
-            ۞ الْقُدُّوْسُ<br>۞ الْمَلِكُ<br>۞ الرَّحِيْمُ<br>۞ الرَّحْمٰنُ<br>۞ الْعَزِيْزُ<br>۞ الْمُهَيْمِنُ<br>
-            ۞ الْمُؤْمِنُ<br>۞ السَّلاَمُ<br>۞ الْبَارِئُ<br>۞ الْخَالِقُ<br>۞ الْمُتَكَبِّرُ<br>۞ الْجَبَّارُ<br>
-            ۞ الْوَهَّابُ<br>۞ الْقَهَّارُ<br>۞ الْغَفَّارُ<br>۞ الْمُصَوِّرُ<br>۞ الْقَابِضُ<br>۞ الْعَلِيْمُ<br>
-            ۞ الْفَتَّاحُ<br>۞ الرَّزَّاقُ<br>۞ الْمُعِزُّ<br>۞ الرَّافِعُ<br>۞ الْخَافِضُ<br>۞ الْبَاسِطُ<br>
-            ۞ الْحَكَمُ<br>۞ الْبَصِيْرُ<br>۞ السَّمِيْعُ<br>۞ الْمُذِلُّ<br>۞ الْحَلِيْمُ<br>۞ الْخَبِيْرُ<br>
-            ۞ اللَّطِيْفُ<br>۞ الْعَدْلُ<br>۞ الْعَلِيُّ<br>۞ الشَّكُوْرُ<br>۞ الْغَفُوْرُ<br>۞ الْعَظِيْمُ<br>
-            ۞ الْحَسِيْبُ<br>۞ الْمُقِيْتُ<br>۞ الْحَفِيْظُ<br>۞ الْكَبِيْرُ<br>۞ الْمُجِيْبُ<br>۞ الرَّقِيْبُ<br>
-            ۞ الْكَرِيْمُ<br>۞ الْجَلِيْلُ<br>۞ الْمَجِيْدُ<br>۞ الْوَدُوْدُ<br>۞ الْحَكِيْمُ<br>۞ الْوَاسِعُ<br>
-            ۞ الْوَكِيْلُ<br>۞ الْحَقُّ<br>۞ الشَّهِيْدُ<br>۞ الْبَاعِثُ<br>۞ الْحَمِيْدُ<br>۞ الْوَلِيُّ<br>
-            ۞ الْمَتِيْنُ<br>۞ الْقَوِيُّ<br>۞ الْمُحْيِي<br>۞ الْمُعِيْدُ<br>۞ الْمُبْدِئُ<br>۞ الْمُحْصِي<br>
-            ۞ الْوَاجِدُ<br>۞ الْقَيُّوْمُ<br>۞ الْحَيُّ<br>۞ الْمُمِيْتُ<br>۞ الصَّمَدُ<br>۞ الْأَحَدُ<br>
-            ۞ الْوَاحِدُ<br>۞ الْمَاجِدُ<br>۞ الْمُؤَخِّرُ<br>۞ الْمُقَدِّمُ<br>۞ الْمُقْتَدِرُ<br>۞ الْقَادِرُ<br>
-            ۞ الْبَاطِنُ<br>۞ الظَّاهِرُ<br>۞ الْأَخِيْرُ<br>۞ الْأَوَّلُ<br>۞ التَّوَّابُ<br>۞ الْبَرُّ<br>
-            ۞ الْمُتَعَالِي<br>۞ الْوَالِي<br>۞ الرَّؤُوْفُ<br>۞ الْعَفُوُّ<br>۞ الْمُنْتَقِمُ<br>۞ الْمُنْعِمُ<br>
-            ۞ ذُو الْجَلاَلِ وَالْإِكْرَامِ<br>۞ مَالِكُ الْمُلْكِ<br>۞ الْمُغْنِي<br>۞ الْغَنِيُّ<br>
-            ۞ الْجَامِعُ<br>۞ الْمُقْسِطُ<br>۞ النُّوْرُ<br>۞ النَّافِعُ<br>۞ الضَّارُ<br>۞ الْمَانِعُ<br>
-            ۞ الْوَارِثُ<br>۞ الْبَاقِي<br>۞ الْبَدِيْعُ<br>۞ الْهَادِي<br>۞ الصَّبُورُ<br>۞ الرَّشِيْدُ
+        
+        return `
+            <div class='arabic-text'>
+                <p class='basmalah'>بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</p>
+                <p style='text-align:center;font-size:1.1em;margin:15px 0;'>نَسْأَلُكَ يَا مَنْ هُوَ اللهُ الَّذِيْ لَا إِلٰهَ إِلَّا هُوَ</p>
+                
+                <div class='asma-grid'>
+                    ${itemsHTML}
+                </div>
+                
+                <p class='doa-title' style='text-align:center;font-size:1.2em;margin:25px 0 10px 0;font-weight:bold;'>﴿ دعاء الأسماء الحسنى ﴾</p>
+                <p style='line-height:1.8;text-align:justify;'>اللّٰهُمَّ إِنِّيْ عَبْدُكَ وَابْنُ عَبْدِكَ وَابْنُ أَمَتِكَ نَاصِيَتِيْ بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ سَمَّيْتَ بِهٖ نَفْسَكَ أَوْ أَنْزَلْتَهُ فِيْ كِتَابِكَ أَوْ عَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ أَوِ اسْتَأْثَرْتَ بِهٖ فِيْ عِلْمِ الْغَيْبِ عِنْدَكَ أَنْ تَجْعَلَ الْقُرْآنَ رَبِيْعَ قَلْبِيْ وَنُوْرَ صَدْرِيْ وَجَلَاءَ حُزْنِيْ وَذَهَابَ هَمِّيْ.</p>
             </div>
-            <p class='doa-title'>﴿ دعاء الأسماء الحسنى ﴾</p>
-            <p>اللّٰهُمَّ إِنِّيْ عَبْدُكَ وابْنُ عَبْدِكَ وَابْنُ أَمَتِكَ نَصِيَتِيْ بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ سَمَّيْتَ بِهٖ نَفْسَكَ أَوْأَنْزَلْتَهُ فِيْ كِتَابِكَ أَوْعَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ أَوِاسْتَأْثَرْتَبِهٖ فِيْ عِلْمِ الْغَيْبِ عِنْدَكَ أَنْ تَجْعَلَ الْقُرْآنَ رَبِيْعَ قَلْبِيْ وَنُوْرَ صَدْرِيْ وَجَلَاءَ حَزَنِيْ وَذَهَابَ هَمِّيْ.</p>
-            </div>`;
+        `;
     }
 
     // Render daftar isi
@@ -425,7 +456,6 @@
         });
         container.innerHTML = html;
         
-        // Tambah event listener
         document.querySelectorAll('.toc-item').forEach(item => {
             item.addEventListener('click', () => {
                 const title = item.getAttribute('data-title');
@@ -434,17 +464,13 @@
         });
     }
     
-    // Buka halaman berdasarkan judul
+    // Buka halaman
     async function openPage(title) {
         currentPage = title;
         
-        // Cek apakah ada konten di data.json untuk judul ini
         let content = '';
-        if (pageData.pages && pageData.pages[title]) {
-            content = pageData.pages[title];
-        } else if (title === 'الأسماء الحسنى') {
-            // Pastikan asmaulhusna selalu ada
-            content = pageData.pages?.['الأسماء الحسنى'] || getFallbackAsmaulHusna();
+        if (title === 'الأسماء الحسنى') {
+            content = getAsmaulHusnaHTML();
         } else {
             content = `<div class="arabic-text" style="text-align:center;padding:50px;"><p>📖 ${title}</p><p style="font-size:0.9rem;margin-top:20px;">Konten sedang disiapkan</p></div>`;
         }
@@ -456,10 +482,7 @@
             </div>
         `;
         
-        // Terapkan font & ukuran ke konten baru
         applyFontSettingsToContent();
-        
-        // Tampilkan tombol back
         document.getElementById('backToToc').style.display = 'flex';
     }
     
@@ -478,7 +501,6 @@
             container.style.fontSize = currentFontSize + 'px';
             container.style.fontFamily = currentFontFamily;
         }
-        // Juga untuk konten dinamis
         const contentPage = document.getElementById('contentPage');
         if (contentPage) {
             contentPage.style.fontSize = currentFontSize + 'px';
@@ -513,7 +535,6 @@
                 document.getElementById('themeToggle').innerHTML = '🌙 Gelap';
             }
         }
-        // Set select font
         const fontSelect = document.getElementById('fontFamilySelect');
         if (fontSelect && currentFontFamily) {
             for (let i = 0; i < fontSelect.options.length; i++) {
@@ -535,7 +556,7 @@
         });
     }
     
-    // Event listeners untuk kontrol
+    // Event listeners
     document.getElementById('fontPlus')?.addEventListener('click', () => {
         currentFontSize = Math.min(currentFontSize + 2, 36);
         applyFontSettingsToContent();
@@ -571,8 +592,7 @@
     document.getElementById('backToToc')?.addEventListener('click', goBackToToc);
     
     // Inisialisasi
-    async function init() {
-        await loadPageData();
+    function init() {
         renderToc();
         loadSettings();
         applyFontSettingsToContent();
