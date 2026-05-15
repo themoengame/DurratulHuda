@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html lang="id" dir="ltr">
+<html lang="id" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Durrat al-Huda - Digital Library</title>
+    
+    <!-- Google Fonts: 10 Font Arab -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Harmattan:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mirza:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -13,10 +26,10 @@
         }
 
         body {
-            font-family: 'Traditional Arabic', 'Amiri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Noto Naskh Arabic', 'Amiri', serif;
             background-color: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.8;
             direction: rtl;
         }
 
@@ -33,6 +46,7 @@
             --accent-dark: #1f5068;
             --shadow: rgba(0, 0, 0, 0.1);
             --card-bg: #ffffff;
+            --navbar-bg: #ffffff;
         }
 
         body.dark {
@@ -47,6 +61,7 @@
             --accent-dark: #2c7da0;
             --shadow: rgba(0, 0, 0, 0.3);
             --card-bg: #252525;
+            --navbar-bg: #1e1e1e;
         }
 
         /* Layout */
@@ -66,6 +81,11 @@
             overflow: hidden;
             box-shadow: -2px 0 5px var(--shadow);
             z-index: 10;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.hide {
+            transform: translateX(100%);
         }
 
         .sidebar-header {
@@ -79,17 +99,7 @@
             font-weight: bold;
             color: var(--accent);
             margin-bottom: 0.5rem;
-        }
-
-        .search-box {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 0.9rem;
+            text-align: center;
         }
 
         .daftar-isi {
@@ -132,16 +142,28 @@
             overflow: hidden;
         }
 
-        /* Toolbar */
-        .toolbar {
+        /* Navbar / Toolbar */
+        .navbar {
             padding: 0.75rem 1.5rem;
-            background-color: var(--bg-secondary);
+            background-color: var(--navbar-bg);
             border-bottom: 1px solid var(--border);
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar.hide {
+            transform: translateY(-100%);
+        }
+
+        .navbar-brand {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent);
+            letter-spacing: 1px;
         }
 
         .toolbar-group {
@@ -177,7 +199,7 @@
             padding: 0 0.25rem;
         }
 
-        .theme-toggle {
+        .theme-toggle, .sidebar-toggle {
             background: var(--accent);
             color: white;
             border: none;
@@ -229,16 +251,40 @@
             color: var(--text-secondary);
         }
 
+        /* Tombol toggle sidebar (floating) */
+        .toggle-sidebar-btn {
+            position: fixed;
+            top: 80px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px var(--shadow);
+            transition: all 0.2s;
+        }
+
+        .toggle-sidebar-btn:hover {
+            background: var(--accent-dark);
+            transform: scale(1.05);
+        }
+
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
-
         ::-webkit-scrollbar-track {
             background: var(--bg-primary);
         }
-
         ::-webkit-scrollbar-thumb {
             background: var(--border);
             border-radius: 4px;
@@ -251,62 +297,68 @@
             }
             .sidebar {
                 width: 100%;
-                height: 40%;
+                height: 50%;
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                z-index: 15;
                 border-left: none;
-                border-bottom: 1px solid var(--border);
+                border-top: 1px solid var(--border);
+            }
+            .sidebar.hide {
+                transform: translateY(100%);
             }
             .main-content {
-                height: 60%;
+                height: 100%;
             }
-            .toolbar {
+            .navbar {
                 padding: 0.5rem;
             }
             .content-card {
                 padding: 1rem;
             }
-        }
-
-        /* Highlight search */
-        .highlight {
-            background-color: #ffc107;
-            color: #1e1e1e;
-            border-radius: 2px;
-            padding: 0 2px;
-        }
-        body.dark .highlight {
-            background-color: #ffb300;
-            color: #000;
+            .toggle-sidebar-btn {
+                top: auto;
+                bottom: 20px;
+                right: 20px;
+            }
         }
     </style>
 </head>
 <body>
 <div class="app">
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <h2>📖 درة الهدى</h2>
-            <input type="text" id="searchInput" class="search-box" placeholder="🔍 Cari judul..." autocomplete="off">
         </div>
         <div class="daftar-isi" id="daftarIsi">
             <div class="loading">Memuat daftar...</div>
         </div>
     </div>
     <div class="main-content">
-        <div class="toolbar">
+        <div class="navbar" id="navbar">
+            <div class="navbar-brand">تدرة الهدى</div>
             <div class="toolbar-group">
                 <select id="fontFamilySelect">
-                    <option value="'Traditional Arabic', 'Amiri', 'Scheherazade New', serif">📜 Traditional</option>
-                    <option value="'Lateef', 'Segoe UI', Tahoma, sans-serif">✍️ Lateef</option>
-                    <option value="'Noto Naskh Arabic', 'Amiri', serif">🖋️ Noto Naskh</option>
-                    <option value="'Arial', 'Tahoma', sans-serif">🔤 Arial</option>
+                    <option value="'Noto Naskh Arabic', serif">📜 Noto Naskh Arabic</option>
+                    <option value="'Noto Kufi Arabic', serif">🏛️ Noto Kufi Arabic</option>
+                    <option value="'Noto Sans Arabic', sans-serif">📝 Noto Sans Arabic</option>
+                    <option value="'Amiri', serif">🖋️ Amiri</option>
+                    <option value="'Cairo', sans-serif">🌆 Cairo</option>
+                    <option value="'Scheherazade New', serif">📖 Scheherazade New</option>
+                    <option value="'Harmattan', sans-serif">✍️ Harmattan</option>
+                    <option value="'Tajawal', sans-serif">✨ Tajawal</option>
+                    <option value="'Mirza', serif">🎨 Mirza</option>
+                    <option value="'Fustat', sans-serif">🔮 Fustat</option>
                 </select>
                 <div class="font-size-control">
                     <button id="fontMinus" title="Kecilkan font">A-</button>
                     <span id="fontSizeLabel">18px</span>
                     <button id="fontPlus" title="Besarkan font">A+</button>
                 </div>
-            </div>
-            <div class="toolbar-group">
                 <button id="themeToggle" class="theme-toggle">🌓 Dark/Light</button>
+                <button id="hideNavbarBtn" class="sidebar-toggle">⬆️ Sembunyi</button>
             </div>
         </div>
         <div class="content-area" id="contentArea">
@@ -317,18 +369,20 @@
         </div>
     </div>
 </div>
+<button class="toggle-sidebar-btn" id="toggleSidebarBtn" title="Tampil/Sembunyi Daftar Isi">📑</button>
 
 <script>
     // State
-    let menuData = [];      // menyimpan { id, title, fileRef }
-    let contentCache = {};  // cache konten berdasarkan id
+    let menuData = [];
+    let contentCache = {};
     let currentId = null;
     let currentFontSize = 18;
-    let currentFontFamily = "'Traditional Arabic', 'Amiri', 'Scheherazade New', serif";
+    let currentFontFamily = "'Noto Naskh Arabic', serif";
+    let sidebarVisible = true;
+    let navbarVisible = true;
 
     // DOM Elements
     const daftarContainer = document.getElementById('daftarIsi');
-    const searchInput = document.getElementById('searchInput');
     const contentTitleDiv = document.getElementById('contentTitle');
     const contentBodyDiv = document.getElementById('contentBody');
     const fontPlusBtn = document.getElementById('fontPlus');
@@ -336,6 +390,10 @@
     const fontSizeLabel = document.getElementById('fontSizeLabel');
     const fontFamilySelect = document.getElementById('fontFamilySelect');
     const themeToggle = document.getElementById('themeToggle');
+    const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
+    const hideNavbarBtn = document.getElementById('hideNavbarBtn');
+    const sidebar = document.getElementById('sidebar');
+    const navbar = document.getElementById('navbar');
 
     // Load data.json
     async function loadData() {
@@ -344,9 +402,7 @@
             if (!response.ok) throw new Error('Gagal load data.json');
             const data = await response.json();
             menuData = data.menu;
-            // Pre-cache content for initial items? optional, will load on click.
             renderMenu(menuData);
-            // Load first item by default
             if (menuData.length > 0) {
                 loadContent(menuData[0].id);
             }
@@ -356,28 +412,20 @@
         }
     }
 
-    // Render menu with search filter
+    // Render menu
     function renderMenu(items) {
-        const searchTerm = searchInput.value.trim().toLowerCase();
-        let filtered = items;
-        if (searchTerm) {
-            filtered = items.filter(item => item.title.toLowerCase().includes(searchTerm));
-        }
-
-        if (filtered.length === 0) {
-            daftarContainer.innerHTML = '<div class="loading">Tidak ditemukan</div>';
+        if (items.length === 0) {
+            daftarContainer.innerHTML = '<div class="loading">Tidak ada data</div>';
             return;
         }
-
         const ul = document.createElement('ul');
-        filtered.forEach(item => {
+        items.forEach(item => {
             const li = document.createElement('li');
             li.textContent = item.title;
             li.dataset.id = item.id;
             if (currentId === item.id) li.classList.add('active');
             li.addEventListener('click', () => {
                 loadContent(item.id);
-                // update active class
                 document.querySelectorAll('#daftarIsi li').forEach(el => el.classList.remove('active'));
                 li.classList.add('active');
             });
@@ -398,19 +446,16 @@
             contentTitleDiv.textContent = 'محتوى';
         }
 
-        // Check cache
         if (contentCache[id]) {
             renderContent(contentCache[id]);
             return;
         }
 
-        // Show loading
         contentBodyDiv.innerHTML = '<div class="loading">جاري التحميل...</div>';
 
         try {
             const response = await fetch(`data.json`);
             const fullData = await response.json();
-            // Assuming structure: { menu: [], contents: { "asmaul-husna": "...", "yasin": "..." } }
             let rawContent = '';
             if (fullData.contents && fullData.contents[id]) {
                 rawContent = fullData.contents[id];
@@ -437,7 +482,6 @@
             arabicDiv.style.fontSize = currentFontSize + 'px';
             arabicDiv.style.fontFamily = currentFontFamily;
         }
-        // also apply to any dynamic elements?
         fontSizeLabel.innerText = currentFontSize + 'px';
     }
 
@@ -472,7 +516,33 @@
         localStorage.setItem('dh_theme', isDark ? 'dark' : 'light');
     }
 
-    // Save preferences
+    // Toggle Sidebar
+    function toggleSidebar() {
+        sidebarVisible = !sidebarVisible;
+        if (sidebarVisible) {
+            sidebar.classList.remove('hide');
+            toggleSidebarBtn.innerHTML = '📑';
+        } else {
+            sidebar.classList.add('hide');
+            toggleSidebarBtn.innerHTML = '📖';
+        }
+        localStorage.setItem('dh_sidebar', sidebarVisible);
+    }
+
+    // Toggle Navbar
+    function toggleNavbar() {
+        navbarVisible = !navbarVisible;
+        if (navbarVisible) {
+            navbar.classList.remove('hide');
+            hideNavbarBtn.innerHTML = '⬆️ Sembunyi';
+        } else {
+            navbar.classList.add('hide');
+            hideNavbarBtn.innerHTML = '⬇️ Tampil';
+        }
+        localStorage.setItem('dh_navbar', navbarVisible);
+    }
+
+    // Load preferences
     function loadPreferences() {
         const savedSize = localStorage.getItem('dh_fontSize');
         if (savedSize) currentFontSize = parseInt(savedSize);
@@ -480,6 +550,18 @@
         if (savedFamily) {
             currentFontFamily = savedFamily;
             fontFamilySelect.value = savedFamily;
+        }
+        const savedSidebar = localStorage.getItem('dh_sidebar');
+        if (savedSidebar === 'false') {
+            sidebarVisible = false;
+            sidebar.classList.add('hide');
+            toggleSidebarBtn.innerHTML = '📖';
+        }
+        const savedNavbar = localStorage.getItem('dh_navbar');
+        if (savedNavbar === 'false') {
+            navbarVisible = false;
+            navbar.classList.add('hide');
+            hideNavbarBtn.innerHTML = '⬇️ Tampil';
         }
         applyFontSettings();
         initTheme();
@@ -492,9 +574,8 @@
         setFontFamily(e.target.value);
     });
     themeToggle.addEventListener('click', toggleTheme);
-    searchInput.addEventListener('input', () => {
-        renderMenu(menuData);
-    });
+    toggleSidebarBtn.addEventListener('click', toggleSidebar);
+    hideNavbarBtn.addEventListener('click', toggleNavbar);
 
     // Initialize
     loadPreferences();
