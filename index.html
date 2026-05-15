@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درة الهدى - المجلد الأول</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #f5f3e8;
+            --text-color: #1a1a2e;
+            --card-bg: #ffffff;
+            --sidebar-bg: #2c2c3a;
+            --sidebar-text: #ffffff;
+            --border-color: #d4c9a8;
+            --accent-color: #8b6914;
+            --accent-light: #c9a82e;
+            --header-bg: #1a472a;
+            --header-text: #f5e6c8;
+            --hover-bg: #e8e0c8;
+        }
+
+        body.dark {
+            --bg-color: #1a1a2e;
+            --text-color: #e8e8e8;
+            --card-bg: #252540;
+            --sidebar-bg: #0f0f1a;
+            --sidebar-text: #e8e8e8;
+            --border-color: #3a3a5a;
+            --accent-color: #c9a82e;
+            --accent-light: #8b6914;
+            --header-bg: #0d2b1a;
+            --header-text: #e8d8b0;
+            --hover-bg: #2a2a4a;
+        }
+
+        body {
+            font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', 'Lateef', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .control-bar {
+            background-color: var(--card-bg);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 85px;
+            z-index: 99;
+        }
+
+        .control-btn {
+            background-color: var(--accent-color);
+            border: none;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background-color: var(--accent-light);
+            transform: scale(1.02);
+        }
+
+        .font-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--bg-color);
+            padding: 5px 15px;
+            border-radius: 30px;
+        }
+
+        .font-control button {
+            background-color: var(--accent-color);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .font-size-value {
+            font-size: 0.9rem;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .search-box {
+            background-color: var(--bg-color);
+            padding: 5px 15px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            padding: 8px;
+            font-size: 0.9rem;
+            font-family: inherit;
+            color: var(--text-color);
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-color);
+            opacity: 0.6;
+        }
+
+        .main-container {
+            display: flex;
+            min-height: calc(100vh - 140px);
+        }
+
+        .sidebar {
+            width: 320px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            position: sticky;
+            top: 140px;
+            height: calc(100vh - 140px);
+            overflow-y: auto;
+            padding: 20px;
+            border-left: 1px solid var(--border-color);
+        }
+
+        .sidebar h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .toc-list {
+            list-style: none;
+        }
+
+        .toc-list li {
+            margin-bottom: 5px;
+        }
+
+        .toc-list a {
+            color: var(--sidebar-text);
+            text-decoration: none;
+            display: block;
+            padding: 6px 12px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+            border-right: 3px solid transparent;
+        }
+
+        .toc-list a:hover {
+            background-color: rgba(255,255,255,0.1);
+            border-right-color: var(--accent-color);
+        }
+
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .cover {
+            background: linear-gradient(135deg, #1a472a 0%, #0d2b1a 100%);
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #f5e6c8;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .cover h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .cover h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            font-weight: normal;
+        }
+
+        .cover .ornament {
+            font-size: 3rem;
+            margin: 30px 0;
+            letter-spacing: 10px;
+        }
+
+        .cover p {
+            font-size: 1.2rem;
+            margin-top: 30px;
+            opacity: 0.9;
+        }
+
+        .section {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .arabic-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            text-align: right;
+            font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif;
+        }
+
+        .arabic-text p {
+            margin-bottom: 15px;
+        }
+
+        .arabic-text .basmalah {
+            font-size: 1.5rem;
+            margin: 15px 0;
+        }
+
+        .doa-title {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            margin: 20px 0 10px;
+            font-weight: bold;
+        }
+
+        .grid-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            list-style: none;
+        }
+
+        .grid-list li {
+            padding: 5px 10px;
+            border-bottom: 1px dotted var(--border-color);
+        }
+
+        hr {
+            margin: 20px 0;
+            border-color: var(--border-color);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 1.5rem;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 0;
+                height: auto;
+                max-height: 350px;
+                border-left: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+            .control-bar {
+                top: 70px;
+                flex-direction: column;
+                align-items: center;
+            }
+            .content {
+                padding: 15px;
+            }
+            .cover h1 {
+                font-size: 2rem;
+            }
+            .section-title {
+                font-size: 1.4rem;
+            }
+            .arabic-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📖 دُرَّةُ الْهُدَى</h1>
+        <p>المجلد الأول - مجموعة الأذكار والأوراد والصلوات والأدعية المأثورة</p>
+    </div>
+
+    <div class="control-bar">
+        <button class="control-btn" id="themeToggle">🌙 الوضع المظلم / 🌞 الوضع الفاتح</button>
+        <div class="font-control">
+            <button id="fontMinus">−</button>
+            <span id="fontSizeValue" class="font-size-value">1.3rem</span>
+            <button id="fontPlus">+</button>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 بحث في المحتوى...">
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <h3>📑 فهرس المحتويات</h3>
+            <ul class="toc-list" id="tocList">
+                <li>جاري التحميل...</li>
+            </ul>
+        </div>
+
+        <div class="content" id="content">
+            <div class="loading">⏳ جاري تحميل الكتاب...</div>
+        </div>
+    </div>
+
+    <script>
+        let bookData = null;
+        let currentFontSize = 1.3;
+        let searchTerm = '';
+
+        // Load JSON data
+        async function loadBookData() {
+            try {
+                const response = await fetch('data.json');
+                if (!response.ok) throw new Error('File data.json tidak ditemukan');
+                bookData = await response.json();
+                renderTOC();
+                renderBook();
+                updateFontSize();
+            } catch (error) {
+                document.getElementById('content').innerHTML = `<div class="loading" style="color:red;">❌ Gagal memuat data: ${error.message}<br><br>Pastikan file data.json berada di folder yang sama dengan file index.html</div>`;
+                console.error(error);
+            }
+        }
+
+        function renderTOC() {
+            const tocList = document.getElementById('tocList');
+            tocList.innerHTML = '';
+            bookData.sections.forEach((section, index) => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `#section-${index}`;
+                a.textContent = `${section.page ? section.page + '. ' : ''}${section.title}`;
+                a.onclick = (e) => {
+                    e.preventDefault();
+                    const target = document.getElementById(`section-${index}`);
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                };
+                li.appendChild(a);
+                tocList.appendChild(li);
+            });
+        }
+
+        function filterContent() {
+            if (!bookData) return;
+            const filteredSections = bookData.sections.filter(section => 
+                searchTerm === '' || 
+                section.title.includes(searchTerm) || 
+                (section.content && section.content.includes(searchTerm))
+            );
+            
+            const container = document.getElementById('content');
+            container.innerHTML = '';
+            
+            // Cover
+            const coverDiv = document.createElement('div');
+            coverDiv.className = 'cover';
+            coverDiv.innerHTML = `
+                <div class="ornament">﴿ ﴾</div>
+                <h1>${bookData.namaKitab}</h1>
+                <h2>${bookData.jilid}</h2>
+                <div class="ornament">★ ✿ ★</div>
+                <p>${bookData.deskripsi || 'مجموعة الأذكار والأوراد والصلوات والأدعية المأثورة'}</p>
+                <p style="font-size: 1rem; margin-top: 20px;">﴿ رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ ﴾</p>
+            `;
+            container.appendChild(coverDiv);
+            
+            if (searchTerm !== '') {
+                const resultInfo = document.createElement('div');
+                resultInfo.style.cssText = 'background:var(--accent-color);color:white;padding:10px;border-radius:10px;margin-bottom:20px;text-align:center';
+                resultInfo.innerHTML = `🔍 نتائج البحث عن: "${searchTerm}" - ditemukan ${filteredSections.length} bagian`;
+                container.appendChild(resultInfo);
+            }
+            
+            filteredSections.forEach((section, idx) => {
+                const originalIndex = bookData.sections.findIndex(s => s.id === section.id);
+                const sectionDiv = document.createElement('div');
+                sectionDiv.id = `section-${originalIndex}`;
+                sectionDiv.className = 'section';
+                
+                let contentHtml = section.content;
+                if (searchTerm !== '') {
+                    const regex = new RegExp(`(${searchTerm})`, 'gi');
+                    contentHtml = contentHtml.replace(regex, '<mark style="background:#c9a82e;color:#1a1a2e;padding:2px 5px;border-radius:5px;">$1</mark>');
+                }
+                
+                sectionDiv.innerHTML = `
+                    <h2 class="section-title">${section.page ? `(${section.page}) ` : ''}${section.title}</h2>
+                    <div class="arabic-text">${contentHtml}</div>
+                `;
+                container.appendChild(sectionDiv);
+            });
+            
+            document.querySelectorAll('.arabic-text').forEach(el => {
+                el.style.fontSize = `${currentFontSize}rem`;
+            });
+        }
+
+        function renderBook() {
+            filterContent();
+        }
+
+        function updateFontSize() {
+            document.querySelectorAll('.arabic-text').forEach(el => {
+                el.style.fontSize = `${currentFontSize}rem`;
+            });
+            document.getElementById('fontSizeValue').textContent = `${currentFontSize}rem`;
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') document.body.classList.add('dark');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadBookData();
+            initTheme();
+            
+            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+            document.getElementById('fontPlus').addEventListener('click', () => {
+                if (currentFontSize < 2.2) {
+                    currentFontSize += 0.1;
+                    updateFontSize();
+                }
+            });
+            document.getElementById('fontMinus').addEventListener('click', () => {
+                if (currentFontSize > 0.9) {
+                    currentFontSize -= 0.1;
+                    updateFontSize();
+                }
+            });
+            
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', (e) => {
+                searchTerm = e.target.value;
+                filterContent();
+            });
+        });
+    </script>
+</body>
+</html>
