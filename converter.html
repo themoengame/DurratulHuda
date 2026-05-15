@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <title>Converter TXT to JSON - Durratul Huda</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a472a;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .header {
+            background: #0d2b1a;
+            color: #f5e6c8;
+            padding: 20px;
+            text-align: center;
+        }
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        .input-area {
+            flex: 1;
+            min-width: 300px;
+        }
+        .output-area {
+            flex: 1;
+            min-width: 300px;
+        }
+        textarea {
+            width: 100%;
+            height: 500px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            border: 2px solid #8b6914;
+            border-radius: 10px;
+            resize: vertical;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: #1a472a;
+        }
+        button {
+            background-color: #8b6914;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background-color: #c9a82e;
+        }
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .preview {
+            background: #f5f3e8;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            max-height: 200px;
+            overflow: auto;
+            font-size: 12px;
+        }
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        hr {
+            margin: 20px 0;
+            border-color: #d4c9a8;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📖 Converter Teks Kitab → data.json</h1>
+        <p>Copy-paste teks kitab Anda, lalu klik konversi</p>
+    </div>
+    <div class="content">
+        <div class="input-area">
+            <label>📝 Teks Kitab (copy dari pesan atau file .txt):</label>
+            <textarea id="inputText" placeholder="Tempelkan teks kitab di sini..."></textarea>
+            <div class="btn-group">
+                <button onclick="convertToJSON()">🔄 Konversi ke JSON</button>
+                <button onclick="downloadJSON()">💾 Download data.json</button>
+                <button onclick="clearAll()">🗑 Clear</button>
+            </div>
+        </div>
+        <div class="output-area">
+            <label>📄 Hasil JSON Preview:</label>
+            <textarea id="outputJSON" readonly style="background:#f0f0f0;" placeholder="Hasil konversi akan muncul di sini..."></textarea>
+            <div id="status"></div>
+        </div>
+    </div>
+    <div style="padding:0 20px 20px 20px">
+        <hr>
+        <h3>📌 Petunjuk Penggunaan:</h3>
+        <ol style="margin:15px 0 0 25px;line-height:1.8">
+            <li>Copy semua teks kitab dari pesan yang Anda terima</li>
+            <li>Tempelkan ke kotak teks di sebelah kiri</li>
+            <li>Klik <strong>"Konversi ke JSON"</strong></li>
+            <li>Klik <strong>"Download data.json"</strong> untuk menyimpan file</li>
+            <li>Simpan <code>data.json</code> di folder yang sama dengan <code>index.html</code></li>
+        </ol>
+        <p style="margin-top:15px;color:#8b6914;">⚠️ <strong>Catatan:</strong> Converter ini akan membagi teks berdasarkan bab secara otomatis. Setelah download, Anda bisa edit manual file JSON jika perlu.</p>
+    </div>
+</div>
+
+<script>
+    let currentJSON = null;
+
+    // Fungsi untuk memisahkan bab-bab dari teks
+    function parseTextToSections(text) {
+        const sections = [];
+        
+        // Daftar judul bab yang dikenal
+        const knownTitles = [
+            "الأسماء الحسنى", "سورة يس", "دعاء بعد سورة يس", "سورة الكهف", "سورة محمد", 
+            "سورة السجدة", "سورة الدخان", "سورة الرحمن", "سورة الواقعة", "دعاء بعد سورة الواقعة",
+            "سورة الحشر", "سورة الملك", "دعاء بعد سورة الملك", "الأوراد قبل صلاة الصبح",
+            "الأوراد بعد الصلاة المكتوبة", "الأوراد بعد صلاة الصبح", "الأوراد بعد صلاة العصر",
+            "الأوراد بعد صلاة المغرب", "الأوراد قبل صلاة العشاء", "الأوراد قبل المكتوبة في شهر رمضان",
+            "دعاء قنوت النازلة", "دعاء (صلاة) الترحيم", "قصيدة زيارة الأولياء", "التوسل قبل التهليل",
+            "التهليل", "دعاء التهليل", "الإستغاثة", "دعاء الإستغاثة", "يس٘ فضيلة", "خصوصية ودعاءها",
+            "الصلاة الإبراهيمية", "الصلاة المنجية", "الصلاة النارية", "الصلاة الفاتح", "الصلاة الحجية",
+            "الصلاة الطبية", "الصلاة الطريقية", "راتب الحداد", "قصيدة للحبيب عبد الله ابن علوي الحداد",
+            "دعاء السلامة", "دعاء صلاة التراويح", "دعاء صلاة الوتر", "دعاء صلاة التهجد", "دعاء صلاة الاستخارة",
+            "دعاء صلاة الحاجة", "دعاء أول السنة", "دعاء أخير السنة", "دعاء ليلة عاشوراء", "دعاء نصف الشعبان",
+            "دعاء (التسبيح) ليلة العرفة", "صلاة التسبيح", "دعاء صلاة التسبيح", "صلاة في ليلة القدر",
+            "صلاة الجنازة", "صلاة الهدية", "صلاة لأنس القبر", "صلاة الكفارات", "صلاة ربو وكاسان",
+            "دعاء بعد صلاة ربو وكاسن", "كيفة عقد النكاح", "الدعاء بعد عقد النكاح"
+        ];
+
+        let remaining = text;
+        let page = 1;
+        let sectionId = 1;
+
+        for (let i = 0; i < knownTitles.length; i++) {
+            const title = knownTitles[i];
+            const nextTitle = knownTitles[i + 1];
+            
+            let startIndex = remaining.indexOf(title);
+            if (startIndex === -1) continue;
+            
+            let endIndex = remaining.length;
+            if (nextTitle) {
+                let nextIndex = remaining.indexOf(nextTitle, startIndex + title.length);
+                if (nextIndex !== -1) endIndex = nextIndex;
+            }
+            
+            let content = remaining.substring(startIndex + title.length, endIndex).trim();
+            
+            // Clean up content
+            content = content.replace(/^\s*\d+\s*$/gm, ''); // hapus nomor halaman
+            content = content.replace(/\n{3,}/g, '\n\n');
+            
+            if (content.length > 10) {
+                sections.push({
+                    id: `section-${sectionId}`,
+                    title: title,
+                    page: page.toString(),
+                    content: `<div class="arabic-text">${content.replace(/\n/g, '<br>')}</div>`
+                });
+                sectionId++;
+                page++;
+            }
+            
+            remaining = remaining.substring(endIndex);
+        }
+        
+        // Jika tidak terdeteksi otomatis, buat satu section besar
+        if (sections.length === 0 && text.length > 100) {
+            sections.push({
+                id: "full-content",
+                title: "محتوى الكتاب",
+                page: "1",
+                content: `<div class="arabic-text">${text.replace(/\n/g, '<br>')}</div>`
+            });
+        }
+        
+        return sections;
+    }
+
+    function convertToJSON() {
+        const inputText = document.getElementById('inputText').value;
+        if (!inputText.trim()) {
+            document.getElementById('status').innerHTML = '<div class="success" style="background:#f8d7da;color:#721c24;">❌ Masukkan teks terlebih dahulu!</div>';
+            return;
+        }
+
+        const sections = parseTextToSections(inputText);
+        
+        currentJSON = {
+            namaKitab: "دُرَّةُ الْهُدَى",
+            jilid: "المجلد الأول",
+            deskripsi: "مجموعة الأذكار والأوراد والصلوات والأدعية المأثورة",
+            sections: sections
+        };
+
+        const jsonString = JSON.stringify(currentJSON, null, 2);
+        document.getElementById('outputJSON').value = jsonString;
+        document.getElementById('status').innerHTML = `<div class="success">✅ Konversi berhasil! Ditemukan ${sections.length} bagian/bab. Klik "Download data.json" untuk menyimpan.</div>`;
+    }
+
+    function downloadJSON() {
+        if (!currentJSON) {
+            document.getElementById('status').innerHTML = '<div class="success" style="background:#f8d7da;color:#721c24;">❌ Belum ada data. Klik "Konversi ke JSON" terlebih dahulu!</div>';
+            return;
+        }
+        
+        const jsonString = JSON.stringify(currentJSON, null, 2);
+        const blob = new Blob([jsonString], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'data.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        
+        document.getElementById('status').innerHTML = '<div class="success">✅ File data.json berhasil di download!</div>';
+    }
+
+    function clearAll() {
+        document.getElementById('inputText').value = '';
+        document.getElementById('outputJSON').value = '';
+        document.getElementById('status').innerHTML = '';
+        currentJSON = null;
+    }
+</script>
+</body>
+</html>
