@@ -1,401 +1,596 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>درة الهدى - المجلد الأول</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Durratul Hadi - Daftar Isi Jilid 1</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
         }
 
+        /* Variabel Tema */
         :root {
-            --bg-color: #f5f3e8;
-            --text-color: #1a1a2e;
-            --card-bg: #ffffff;
-            --sidebar-bg: #2c2c3a;
-            --sidebar-text: #ffffff;
-            --border-color: #d4c9a8;
-            --accent-color: #8b6914;
-            --accent-light: #c9a82e;
-            --header-bg: #1a472a;
-            --header-text: #f5e6c8;
-            --hover-bg: #e8e0c8;
+            --bg-body: #e9e4d8;
+            --bg-container: #fffef7;
+            --bg-header: #2e3820;
+            --text-header: #f9eec1;
+            --text-primary: #2d2a1e;
+            --text-secondary: #5f553b;
+            --border-color: #e2d5ba;
+            --accent: #b8863b;
+            --accent-light: #fcf8e8;
+            --item-hover: #fcf8e8;
+            --control-bg: #faf6e9;
+            --btn-bg: #d8c89c;
+            --btn-hover: #c2ae78;
+            --shadow: rgba(0, 0, 0, 0.1);
         }
 
         body.dark {
-            --bg-color: #1a1a2e;
-            --text-color: #e8e8e8;
-            --card-bg: #252540;
-            --sidebar-bg: #0f0f1a;
-            --sidebar-text: #e8e8e8;
-            --border-color: #3a3a5a;
-            --accent-color: #c9a82e;
-            --accent-light: #8b6914;
-            --header-bg: #0d2b1a;
-            --header-text: #e8d8b0;
-            --hover-bg: #2a2a4a;
+            --bg-body: #1a1a2e;
+            --bg-container: #16213e;
+            --bg-header: #0f3460;
+            --text-header: #e8e8e8;
+            --text-primary: #e8e8e8;
+            --text-secondary: #a0a0a0;
+            --border-color: #2c3e66;
+            --accent: #e94560;
+            --accent-light: #1a2a4a;
+            --item-hover: #1f2a4a;
+            --control-bg: #0f2a3e;
+            --btn-bg: #533483;
+            --btn-hover: #7b4ca0;
+            --shadow: rgba(0, 0, 0, 0.3);
         }
 
         body {
-            font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', 'Lateef', serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            transition: all 0.3s ease;
+            background: var(--bg-body);
+            font-family: 'Segoe UI', 'Traditional Arabic', 'Sakkal Majalla', 'Times New Roman', serif;
+            padding: 1rem;
+            min-height: 100vh;
         }
 
+        /* Container */
+        .book-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--bg-container);
+            border-radius: 28px;
+            box-shadow: 0 25px 45px -12px var(--shadow);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Header */
         .header {
-            background-color: var(--header-bg);
-            color: var(--header-text);
-            padding: 15px 20px;
+            background: var(--bg-header);
+            padding: 1.5rem;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border-bottom: 4px solid var(--accent);
         }
 
         .header h1 {
-            font-size: 1.5rem;
+            font-family: 'Traditional Arabic', 'Sakkal Majalla', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-header);
+            letter-spacing: 1px;
         }
 
-        .control-bar {
-            background-color: var(--card-bg);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 70px;
-            z-index: 99;
-        }
-
-        .control-btn {
-            background-color: var(--accent-color);
-            border: none;
-            color: white;
-            padding: 6px 15px;
-            border-radius: 30px;
-            cursor: pointer;
+        .header h2 {
             font-size: 0.9rem;
+            color: var(--accent);
+            margin-top: 8px;
         }
 
-        .font-control {
+        /* Control Panel */
+        .control-panel {
+            background: var(--control-bg);
+            padding: 0.8rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .control-group {
             display: flex;
             align-items: center;
             gap: 8px;
-            background-color: var(--bg-color);
-            padding: 3px 12px;
-            border-radius: 30px;
-        }
-
-        .font-control button {
-            background-color: var(--accent-color);
-            border: none;
-            color: white;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .page-nav {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background-color: var(--bg-color);
-            padding: 5px 15px;
-            border-radius: 30px;
-        }
-
-        .page-nav button {
-            background-color: var(--accent-color);
-            border: none;
-            color: white;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.2rem;
-        }
-
-        .page-nav input {
-            width: 60px;
-            text-align: center;
-            padding: 5px;
-            border-radius: 20px;
+            background: var(--bg-container);
+            padding: 5px 12px;
+            border-radius: 40px;
             border: 1px solid var(--border-color);
-            background: var(--card-bg);
-            color: var(--text-color);
-            font-family: inherit;
         }
 
-        .page-nav span {
-            font-size: 0.9rem;
+        .control-group label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
         }
 
-        .search-box input {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            padding: 6px 12px;
-            border-radius: 30px;
-            font-family: inherit;
-            color: var(--text-color);
-            outline: none;
-            width: 180px;
-        }
-
-        .main-container {
-            display: flex;
-            min-height: calc(100vh - 120px);
-        }
-
-        .sidebar {
-            width: 280px;
-            background-color: var(--sidebar-bg);
-            color: var(--sidebar-text);
-            position: sticky;
-            top: 120px;
-            height: calc(100vh - 120px);
-            overflow-y: auto;
-            padding: 15px;
-            border-left: 1px solid var(--border-color);
-        }
-
-        .sidebar h3 {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 1rem;
-        }
-
-        .toc-list {
-            list-style: none;
-        }
-
-        .toc-list li {
-            margin-bottom: 3px;
-        }
-
-        .toc-list a {
-            color: var(--sidebar-text);
-            text-decoration: none;
-            display: block;
+        select, .theme-btn {
             padding: 5px 10px;
-            border-radius: 6px;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-container);
+            color: var(--text-primary);
+            cursor: pointer;
             font-size: 0.8rem;
-            border-right: 2px solid transparent;
         }
 
-        .toc-list a:hover {
-            background-color: rgba(255,255,255,0.1);
-            border-right-color: var(--accent-color);
+        .font-size-btns {
+            display: flex;
+            gap: 5px;
         }
 
-        .content {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
+        .font-size-btns button {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--btn-bg);
+            color: var(--text-primary);
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
-        .page-container {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 30px;
+        .font-size-btns button:hover {
+            background: var(--btn-hover);
+        }
+
+        .theme-btn {
+            background: var(--btn-bg);
+            padding: 5px 15px;
+        }
+
+        /* Back Button */
+        .back-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-left: auto;
+        }
+
+        /* Daftar Isi */
+        .toc-list, .content-page {
+            padding: 1.5rem;
             min-height: 500px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
-        .page-number {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid var(--border-color);
-            color: var(--accent-color);
-            font-size: 0.9rem;
-        }
-
-        .arabic-text {
-            font-size: 1.3rem;
-            line-height: 1.8;
+        .toc-item {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 10px 16px;
+            margin: 6px 0;
+            border-radius: 14px;
+            cursor: pointer;
+            direction: rtl;
             text-align: right;
+            font-family: inherit;
+            font-size: inherit;
+            border-left: 4px solid transparent;
+            transition: all 0.2s;
         }
 
-        .arabic-text p {
-            margin-bottom: 15px;
+        .toc-item:hover {
+            background: var(--item-hover);
+            border-left-color: var(--accent);
+            transform: translateX(-3px);
         }
 
+        .toc-bullet {
+            font-size: 1.2em;
+            color: var(--accent);
+            min-width: 28px;
+        }
+
+        .toc-text {
+            flex: 1;
+        }
+
+        /* Konten Halaman */
+        .content-page {
+            direction: rtl;
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        .content-page .arabic-text {
+            line-height: 1.8;
+        }
+
+        .content-page .basmalah {
+            font-size: 1.3em;
+            text-align: center;
+            margin: 15px 0;
+            color: var(--accent);
+        }
+
+        .content-page .doa-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0 10px;
+            color: var(--accent);
+        }
+
+        .no-result {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            background: var(--control-bg);
+            padding: 0.8rem;
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Loading */
         .loading {
             text-align: center;
             padding: 50px;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar {
-                display: none;
-            }
-            .control-bar {
-                top: 60px;
-                gap: 8px;
-            }
-            .page-nav input {
-                width: 50px;
-            }
-            .search-box input {
-                width: 130px;
-            }
+            color: var(--text-secondary);
+            font-size: 1.1rem;
         }
     </style>
 </head>
 <body>
+<div class="book-container" id="app">
     <div class="header">
-        <h1>📖 دُرَّةُ الْهُدَى - المجلد الأول</h1>
+        <h1>محتویات كتاب درة الهدى</h1>
+        <h2>المجلد الأول — Durratul Hadi Jilid 1</h2>
     </div>
 
-    <div class="control-bar">
-        <button class="control-btn" id="themeToggle">🌙/🌞</button>
-        <div class="font-control">
-            <button id="fontMinus">−</button>
-            <span id="fontSizeValue">1.3</span>
-            <button id="fontPlus">+</button>
+    <div class="control-panel">
+        <div class="control-group">
+            <label>📖 Font:</label>
+            <select id="fontFamilySelect">
+                <option value="'Traditional Arabic', 'Sakkal Majalla', 'Times New Roman', serif">Traditional Arabic</option>
+                <option value="'Amiri', 'Times New Roman', serif">Amiri</option>
+                <option value="'Segoe UI', 'Tahoma', sans-serif">Segoe UI</option>
+                <option value="'Arial', sans-serif">Arial</option>
+                <option value="'Courier New', monospace">Courier New</option>
+                <option value="'Lateef', 'Traditional Arabic', serif">Lateef</option>
+                <option value="'Scheherazade', 'Times New Roman', serif">Scheherazade</option>
+            </select>
         </div>
-        <div class="page-nav">
-            <button id="firstPage">⏮</button>
-            <button id="prevPage">◀</button>
-            <input type="number" id="pageInput" min="1" max="216" value="1">
-            <span>/ <span id="totalPages">216</span></span>
-            <button id="nextPage">▶</button>
-            <button id="lastPage">⏭</button>
+        <div class="control-group">
+            <label>🔤 Ukuran:</label>
+            <div class="font-size-btns">
+                <button id="fontMinus" title="Perkecil">A-</button>
+                <button id="fontReset" title="Reset">A</button>
+                <button id="fontPlus" title="Perbesar">A+</button>
+            </div>
         </div>
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="🔍 بحث...">
+        <div class="control-group">
+            <button id="themeToggle" class="theme-btn">🌙 Gelap</button>
         </div>
+        <button id="backToToc" class="back-btn" style="display:none;">← Kembali ke Daftar Isi</button>
     </div>
 
-    <div class="main-container">
-        <div class="sidebar">
-            <h3>📑 الفهرس</h3>
-            <ul class="toc-list" id="tocList">
-                <li>جاري التحميل...</li>
-            </ul>
-        </div>
-        <div class="content" id="content">
-            <div class="loading">⏳ جاري تحميل الكتاب...</div>
-        </div>
+    <div id="mainContent">
+        <div class="loading" id="loadingIndicator">⏳ Memuat daftar isi...</div>
+        <div class="toc-list" id="tocContainer" style="display:none;"></div>
     </div>
 
-    <script>
-        let pages = {};
-        let currentPage = 1;
-        let totalPages = 216;
-        let currentFontSize = 1.3;
-        let tocData = [];
+    <div class="footer">
+        📖 Klik pada judul untuk membaca | Ukuran & jenis font dapat diubah | Tema gelap/terang
+    </div>
+</div>
 
-        async function loadData() {
-            try {
-                const response = await fetch('data.json');
-                if (!response.ok) throw new Error('data.json tidak ditemukan');
-                const data = await response.json();
-                pages = data.pages || {};
-                tocData = data.toc || [];
-                totalPages = data.totalPages || 216;
-                document.getElementById('totalPages').innerText = totalPages;
-                renderTOC();
-                renderPage(currentPage);
-            } catch (error) {
-                document.getElementById('content').innerHTML = `<div class="loading" style="color:red;">❌ Error: ${error.message}<br><br>Pastikan file data.json ada!</div>`;
+<script>
+    // Data daftar isi (tanpa halaman)
+    const tocData = [
+        "الأسماء الحسنى",
+        "سورة يس",
+        "دعاء بعد سورة يس",
+        "سورة الكهف",
+        "سورة محمد",
+        "سورة السجدة",
+        "سورة الدخان",
+        "سورة الرحمن",
+        "سورة الواقعة",
+        "دعاء بعد سورة الواقعة",
+        "سورة الحشر",
+        "سورة الملك",
+        "دعاء بعد سورة الملك",
+        "الأوراد قبل صلاة الصبح",
+        "الأوراد بعد صلاة المكتوبة",
+        "الأوراد بعد صلاة الصبح",
+        "الأوراد بعد صلاة العصر",
+        "الأوراد بعد صلاة المغرب",
+        "الأوراد قبل صلاة العشاء",
+        "الأوراد قبل المكتوبة في شهر رمضان",
+        "دعاء قنوت النازلة",
+        "دعاء (صلاة) الترحيـم",
+        "قصيدة زيارة الأولياء",
+        "التوسل قبل التهليل",
+        "التهليل",
+        "دعاء التهليل",
+        "الاستغاثة ودعاؤها",
+        "يسأل فضيلة",
+        "خصوصية ودعاؤها",
+        "الصلاة الإبراهيمية",
+        "الصلاة المنجية",
+        "الصلاة النارية",
+        "الصلاة الفاتح",
+        "الصلاة الحجية",
+        "الصلاة الطبية",
+        "الصلاة الطريقية",
+        "راتب الحداد",
+        "قصيدة للحبيب عبد الله ابن علوي الحداد",
+        "دعاء السلامة",
+        "دعاء صلاة التراويح",
+        "دعاء صلاة الوتر",
+        "دعاء صلاة التهجد",
+        "دعاء صلاة الاستخارة",
+        "دعاء صلاة الحاجة",
+        "دعاء أول السنة",
+        "دعاء آخر السنة",
+        "دعاء ليلة عاشوراء",
+        "دعاء نصف الشعبان",
+        "دعاء (التسبيح) ليلة العرفة",
+        "صلاة التسبيح",
+        "دعاء صلاة التسبيح",
+        "صلاة في ليلة القدر",
+        "صلاة الجنازة",
+        "صلاة الهدية",
+        "صلاة لأنس القبر",
+        "صلاة الكفارات",
+        "صلاة ربو وكاسان",
+        "دعاء بعد صلاة ربو وكاسن",
+        "كيفية عقد النكاح",
+        "الدعاء بعد عقد النكاح",
+        "الدُّعَاءُ بَعْدَ عَقْدِ النِّكَاحِ"
+    ];
+
+    // State
+    let currentFontSize = 18;
+    let currentFontFamily = "'Traditional Arabic', 'Sakkal Majalla', 'Times New Roman', serif";
+    let currentTheme = 'light';
+    let currentPage = null;
+    let pageData = { pages: {} };
+
+    // Load data.json
+    async function loadPageData() {
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const tocContainer = document.getElementById('tocContainer');
+        
+        try {
+            const response = await fetch('data.json');
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: data.json tidak ditemukan`);
             }
-        }
-
-        function renderTOC() {
-            const container = document.getElementById('tocList');
-            container.innerHTML = '';
-            if (tocData.length === 0) {
-                container.innerHTML = '<li>Tidak ada data</li>';
-                return;
-            }
-            tocData.forEach(item => {
-                const li = document.createElement('li');
-                const a = document.createElement('a');
-                a.href = '#';
-                a.textContent = item.title;
-                a.onclick = (e) => {
-                    e.preventDefault();
-                    goToPage(item.page);
-                };
-                li.appendChild(a);
-                container.appendChild(li);
-            });
-        }
-
-        function renderPage(pageNum) {
-            const container = document.getElementById('content');
-            const pageContent = pages[pageNum] || `<div class="page-container"><div class="arabic-text"><p style="color:red;">❌ المحتوى غير متوفر للصفحة ${pageNum}</p></div></div>`;
+            pageData = await response.json();
+            console.log('✅ Data loaded:', Object.keys(pageData.pages || {}));
             
-            container.innerHTML = `
-                <div class="page-container">
-                    <div class="arabic-text">${pageContent}</div>
-                    <div class="page-number">صفحة ${pageNum} من ${totalPages}</div>
+            // Sembunyikan loading, tampilkan daftar isi
+            loadingIndicator.style.display = 'none';
+            tocContainer.style.display = 'block';
+            renderToc();
+        } catch (error) {
+            console.error('❌ Error loading data.json:', error);
+            loadingIndicator.innerHTML = `
+                <div style="text-align:center;color:var(--accent);">
+                    <p>⚠️ Gagal memuat data.json</p>
+                    <p style="font-size:0.9rem;margin-top:10px;">Pastikan file data.json berada di folder yang sama dengan index.html</p>
+                    <p style="font-size:0.8rem;margin-top:5px;">Error: ${error.message}</p>
                 </div>
             `;
-            
-            document.querySelectorAll('.arabic-text').forEach(el => {
-                el.style.fontSize = `${currentFontSize}rem`;
-            });
-            
-            document.getElementById('pageInput').value = pageNum;
-            currentPage = pageNum;
         }
+    }
 
-        function goToPage(pageNum) {
-            if (pageNum < 1) pageNum = 1;
-            if (pageNum > totalPages) pageNum = totalPages;
-            renderPage(pageNum);
-        }
-
-        function updateFontSize() {
-            document.querySelectorAll('.arabic-text').forEach(el => {
-                el.style.fontSize = `${currentFontSize}rem`;
-            });
-            document.getElementById('fontSizeValue').innerText = currentFontSize;
-        }
-
-        function initTheme() {
-            if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
-        }
-
-        function toggleTheme() {
-            document.body.classList.toggle('dark');
-            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadData();
-            initTheme();
-            
-            document.getElementById('themeToggle').addEventListener('click', toggleTheme);
-            document.getElementById('fontPlus').addEventListener('click', () => {
-                if (currentFontSize < 2.2) { currentFontSize += 0.1; updateFontSize(); }
-            });
-            document.getElementById('fontMinus').addEventListener('click', () => {
-                if (currentFontSize > 0.9) { currentFontSize -= 0.1; updateFontSize(); }
-            });
-            document.getElementById('prevPage').addEventListener('click', () => goToPage(currentPage - 1));
-            document.getElementById('nextPage').addEventListener('click', () => goToPage(currentPage + 1));
-            document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
-            document.getElementById('lastPage').addEventListener('click', () => goToPage(totalPages));
-            document.getElementById('pageInput').addEventListener('change', (e) => goToPage(parseInt(e.target.value) || 1));
-            
-            document.getElementById('searchInput').addEventListener('input', async (e) => {
-                const term = e.target.value;
-                if (term.length < 2) return renderPage(currentPage);
-                // Search implementation bisa ditambahkan
+    // Render daftar isi
+    function renderToc() {
+        const container = document.getElementById('tocContainer');
+        if (!container) return;
+        
+        let html = '';
+        tocData.forEach(title => {
+            html += `
+                <div class="toc-item" data-title="${escapeHtml(title)}">
+                    <div class="toc-bullet">❂</div>
+                    <div class="toc-text" dir="rtl">${escapeHtml(title)}</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        
+        // Tambah event listener
+        document.querySelectorAll('.toc-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const title = item.getAttribute('data-title');
+                openPage(title);
             });
         });
-    </script>
+    }
+    
+    // Buka halaman berdasarkan judul
+    async function openPage(title) {
+        currentPage = title;
+        
+        // Ambil konten dari data.json
+        let content = '';
+        if (pageData.pages && pageData.pages[title]) {
+            content = pageData.pages[title];
+        } else {
+            content = `<div class="arabic-text" style="text-align:center;padding:50px;">
+                <p>📖 ${title}</p>
+                <p style="font-size:0.9rem;margin-top:20px;color:var(--accent);">Konten belum tersedia di data.json</p>
+                <p style="font-size:0.8rem;margin-top:10px;">Silakan tambahkan entri "${title}" ke file data.json</p>
+            </div>`;
+        }
+        
+        const mainContent = document.getElementById('mainContent');
+        mainContent.innerHTML = `
+            <div class="content-page" id="contentPage" dir="rtl">
+                ${content}
+            </div>
+        `;
+        
+        // Terapkan font & ukuran ke konten baru
+        applyFontSettingsToContent();
+        
+        // Tampilkan tombol back
+        const backBtn = document.getElementById('backToToc');
+        if (backBtn) backBtn.style.display = 'flex';
+        
+        // Scroll ke atas
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function goBackToToc() {
+        currentPage = null;
+        const mainContent = document.getElementById('mainContent');
+        mainContent.innerHTML = `
+            <div class="toc-list" id="tocContainer"></div>
+        `;
+        renderToc();
+        
+        const backBtn = document.getElementById('backToToc');
+        if (backBtn) backBtn.style.display = 'none';
+        
+        applyFontSettingsToContent();
+        
+        // Scroll ke atas
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function applyFontSettingsToContent() {
+        const container = document.getElementById('app');
+        if (container) {
+            container.style.fontSize = currentFontSize + 'px';
+            container.style.fontFamily = currentFontFamily;
+        }
+        
+        const contentPage = document.getElementById('contentPage');
+        if (contentPage) {
+            contentPage.style.fontSize = currentFontSize + 'px';
+            contentPage.style.fontFamily = currentFontFamily;
+        }
+        
+        const tocContainer = document.getElementById('tocContainer');
+        if (tocContainer) {
+            tocContainer.style.fontSize = currentFontSize + 'px';
+            tocContainer.style.fontFamily = currentFontFamily;
+        }
+    }
+    
+    function saveSettings() {
+        localStorage.setItem('dh_fontSize', currentFontSize);
+        localStorage.setItem('dh_fontFamily', currentFontFamily);
+        localStorage.setItem('dh_theme', currentTheme);
+    }
+    
+    function loadSettings() {
+        const savedSize = localStorage.getItem('dh_fontSize');
+        if (savedSize) currentFontSize = parseInt(savedSize);
+        
+        const savedFont = localStorage.getItem('dh_fontFamily');
+        if (savedFont) {
+            currentFontFamily = savedFont;
+            const fontSelect = document.getElementById('fontFamilySelect');
+            if (fontSelect) {
+                for (let i = 0; i < fontSelect.options.length; i++) {
+                    if (fontSelect.options[i].value === currentFontFamily) {
+                        fontSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        const savedTheme = localStorage.getItem('dh_theme');
+        if (savedTheme) {
+            currentTheme = savedTheme;
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark');
+                const themeBtn = document.getElementById('themeToggle');
+                if (themeBtn) themeBtn.innerHTML = '☀️ Terang';
+            } else {
+                document.body.classList.remove('dark');
+                const themeBtn = document.getElementById('themeToggle');
+                if (themeBtn) themeBtn.innerHTML = '🌙 Gelap';
+            }
+        }
+        
+        applyFontSettingsToContent();
+    }
+    
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    // Event listeners untuk kontrol
+    document.getElementById('fontPlus')?.addEventListener('click', () => {
+        currentFontSize = Math.min(currentFontSize + 2, 36);
+        applyFontSettingsToContent();
+        saveSettings();
+    });
+    
+    document.getElementById('fontMinus')?.addEventListener('click', () => {
+        currentFontSize = Math.max(currentFontSize - 2, 12);
+        applyFontSettingsToContent();
+        saveSettings();
+    });
+    
+    document.getElementById('fontReset')?.addEventListener('click', () => {
+        currentFontSize = 18;
+        applyFontSettingsToContent();
+        saveSettings();
+    });
+    
+    document.getElementById('fontFamilySelect')?.addEventListener('change', (e) => {
+        currentFontFamily = e.target.value;
+        applyFontSettingsToContent();
+        saveSettings();
+    });
+    
+    document.getElementById('themeToggle')?.addEventListener('click', () => {
+        if (currentTheme === 'light') {
+            currentTheme = 'dark';
+            document.body.classList.add('dark');
+            document.getElementById('themeToggle').innerHTML = '☀️ Terang';
+        } else {
+            currentTheme = 'light';
+            document.body.classList.remove('dark');
+            document.getElementById('themeToggle').innerHTML = '🌙 Gelap';
+        }
+        saveSettings();
+    });
+    
+    document.getElementById('backToToc')?.addEventListener('click', goBackToToc);
+    
+    // Inisialisasi
+    async function init() {
+        loadSettings();
+        await loadPageData();
+        applyFontSettingsToContent();
+    }
+    
+    init();
+</script>
 </body>
 </html>
