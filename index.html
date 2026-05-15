@@ -241,14 +241,6 @@
             color: var(--text-secondary);
             border-top: 1px solid var(--border-color);
         }
-
-        /* Loading */
-        .loading {
-            text-align: center;
-            padding: 50px;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
     </style>
 </head>
 <body>
@@ -267,16 +259,14 @@
                 <option value="'Segoe UI', 'Tahoma', sans-serif">Segoe UI</option>
                 <option value="'Arial', sans-serif">Arial</option>
                 <option value="'Courier New', monospace">Courier New</option>
-                <option value="'Lateef', 'Traditional Arabic', serif">Lateef</option>
-                <option value="'Scheherazade', 'Times New Roman', serif">Scheherazade</option>
             </select>
         </div>
         <div class="control-group">
             <label>🔤 Ukuran:</label>
             <div class="font-size-btns">
                 <button id="fontMinus" title="Perkecil">A-</button>
-                <button id="fontReset" title="Reset">A</button>
                 <button id="fontPlus" title="Perbesar">A+</button>
+                <button id="fontReset" title="Reset">A</button>
             </div>
         </div>
         <div class="control-group">
@@ -286,8 +276,8 @@
     </div>
 
     <div id="mainContent">
-        <div class="loading" id="loadingIndicator">⏳ Memuat daftar isi...</div>
-        <div class="toc-list" id="tocContainer" style="display:none;"></div>
+        <!-- Daftar isi akan di-render di sini -->
+        <div class="toc-list" id="tocContainer">Memuat daftar isi...</div>
     </div>
 
     <div class="footer">
@@ -365,36 +355,58 @@
     let currentFontSize = 18;
     let currentFontFamily = "'Traditional Arabic', 'Sakkal Majalla', 'Times New Roman', serif";
     let currentTheme = 'light';
-    let currentPage = null;
-    let pageData = { pages: {} };
+    let currentPage = null; // null = daftar isi, 'asmaulhusna' atau lainnya
+
+    // Cache data.json
+    let pageData = {};
 
     // Load data.json
     async function loadPageData() {
-        const loadingIndicator = document.getElementById('loadingIndicator');
-        const tocContainer = document.getElementById('tocContainer');
-        
         try {
             const response = await fetch('data.json');
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}: data.json tidak ditemukan`);
+            if (response.ok) {
+                pageData = await response.json();
+                console.log('Data loaded:', Object.keys(pageData.pages || {}));
+            } else {
+                console.warn('data.json not found, using fallback');
+                // Fallback untuk asmaulhusna
+                pageData.pages = pageData.pages || {};
+                if (!pageData.pages['الأسماء الحسنى']) {
+                    pageData.pages['الأسماء الحسنى'] = getFallbackAsmaulHusna();
+                }
             }
-            pageData = await response.json();
-            console.log('✅ Data loaded:', Object.keys(pageData.pages || {}));
-            
-            // Sembunyikan loading, tampilkan daftar isi
-            loadingIndicator.style.display = 'none';
-            tocContainer.style.display = 'block';
-            renderToc();
         } catch (error) {
-            console.error('❌ Error loading data.json:', error);
-            loadingIndicator.innerHTML = `
-                <div style="text-align:center;color:var(--accent);">
-                    <p>⚠️ Gagal memuat data.json</p>
-                    <p style="font-size:0.9rem;margin-top:10px;">Pastikan file data.json berada di folder yang sama dengan index.html</p>
-                    <p style="font-size:0.8rem;margin-top:5px;">Error: ${error.message}</p>
-                </div>
-            `;
+            console.error('Error loading data.json:', error);
+            pageData.pages = { 'الأسماء الحسنى': getFallbackAsmaulHusna() };
         }
+    }
+
+    function getFallbackAsmaulHusna() {
+        return `<div class='arabic-text'>
+            <p class='basmalah'>بِسْمِ اللهِ الرَّحْمنِ الرَّحِيْمِ</p>
+            <p>نَسْاَلُكَ يَا مَنْ هُوَ اللهُ الَّذِيْ لاَ إِلٰهَ إِلاَّ هُوَ</p>
+            <div style='display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:20px 0;'>
+            ۞ الْقُدُّوْسُ<br>۞ الْمَلِكُ<br>۞ الرَّحِيْمُ<br>۞ الرَّحْمٰنُ<br>۞ الْعَزِيْزُ<br>۞ الْمُهَيْمِنُ<br>
+            ۞ الْمُؤْمِنُ<br>۞ السَّلاَمُ<br>۞ الْبَارِئُ<br>۞ الْخَالِقُ<br>۞ الْمُتَكَبِّرُ<br>۞ الْجَبَّارُ<br>
+            ۞ الْوَهَّابُ<br>۞ الْقَهَّارُ<br>۞ الْغَفَّارُ<br>۞ الْمُصَوِّرُ<br>۞ الْقَابِضُ<br>۞ الْعَلِيْمُ<br>
+            ۞ الْفَتَّاحُ<br>۞ الرَّزَّاقُ<br>۞ الْمُعِزُّ<br>۞ الرَّافِعُ<br>۞ الْخَافِضُ<br>۞ الْبَاسِطُ<br>
+            ۞ الْحَكَمُ<br>۞ الْبَصِيْرُ<br>۞ السَّمِيْعُ<br>۞ الْمُذِلُّ<br>۞ الْحَلِيْمُ<br>۞ الْخَبِيْرُ<br>
+            ۞ اللَّطِيْفُ<br>۞ الْعَدْلُ<br>۞ الْعَلِيُّ<br>۞ الشَّكُوْرُ<br>۞ الْغَفُوْرُ<br>۞ الْعَظِيْمُ<br>
+            ۞ الْحَسِيْبُ<br>۞ الْمُقِيْتُ<br>۞ الْحَفِيْظُ<br>۞ الْكَبِيْرُ<br>۞ الْمُجِيْبُ<br>۞ الرَّقِيْبُ<br>
+            ۞ الْكَرِيْمُ<br>۞ الْجَلِيْلُ<br>۞ الْمَجِيْدُ<br>۞ الْوَدُوْدُ<br>۞ الْحَكِيْمُ<br>۞ الْوَاسِعُ<br>
+            ۞ الْوَكِيْلُ<br>۞ الْحَقُّ<br>۞ الشَّهِيْدُ<br>۞ الْبَاعِثُ<br>۞ الْحَمِيْدُ<br>۞ الْوَلِيُّ<br>
+            ۞ الْمَتِيْنُ<br>۞ الْقَوِيُّ<br>۞ الْمُحْيِي<br>۞ الْمُعِيْدُ<br>۞ الْمُبْدِئُ<br>۞ الْمُحْصِي<br>
+            ۞ الْوَاجِدُ<br>۞ الْقَيُّوْمُ<br>۞ الْحَيُّ<br>۞ الْمُمِيْتُ<br>۞ الصَّمَدُ<br>۞ الْأَحَدُ<br>
+            ۞ الْوَاحِدُ<br>۞ الْمَاجِدُ<br>۞ الْمُؤَخِّرُ<br>۞ الْمُقَدِّمُ<br>۞ الْمُقْتَدِرُ<br>۞ الْقَادِرُ<br>
+            ۞ الْبَاطِنُ<br>۞ الظَّاهِرُ<br>۞ الْأَخِيْرُ<br>۞ الْأَوَّلُ<br>۞ التَّوَّابُ<br>۞ الْبَرُّ<br>
+            ۞ الْمُتَعَالِي<br>۞ الْوَالِي<br>۞ الرَّؤُوْفُ<br>۞ الْعَفُوُّ<br>۞ الْمُنْتَقِمُ<br>۞ الْمُنْعِمُ<br>
+            ۞ ذُو الْجَلاَلِ وَالْإِكْرَامِ<br>۞ مَالِكُ الْمُلْكِ<br>۞ الْمُغْنِي<br>۞ الْغَنِيُّ<br>
+            ۞ الْجَامِعُ<br>۞ الْمُقْسِطُ<br>۞ النُّوْرُ<br>۞ النَّافِعُ<br>۞ الضَّارُ<br>۞ الْمَانِعُ<br>
+            ۞ الْوَارِثُ<br>۞ الْبَاقِي<br>۞ الْبَدِيْعُ<br>۞ الْهَادِي<br>۞ الصَّبُورُ<br>۞ الرَّشِيْدُ
+            </div>
+            <p class='doa-title'>﴿ دعاء الأسماء الحسنى ﴾</p>
+            <p>اللّٰهُمَّ إِنِّيْ عَبْدُكَ وابْنُ عَبْدِكَ وَابْنُ أَمَتِكَ نَصِيَتِيْ بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ سَمَّيْتَ بِهٖ نَفْسَكَ أَوْأَنْزَلْتَهُ فِيْ كِتَابِكَ أَوْعَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ أَوِاسْتَأْثَرْتَبِهٖ فِيْ عِلْمِ الْغَيْبِ عِنْدَكَ أَنْ تَجْعَلَ الْقُرْآنَ رَبِيْعَ قَلْبِيْ وَنُوْرَ صَدْرِيْ وَجَلَاءَ حَزَنِيْ وَذَهَابَ هَمِّيْ.</p>
+            </div>`;
     }
 
     // Render daftar isi
@@ -426,16 +438,15 @@
     async function openPage(title) {
         currentPage = title;
         
-        // Ambil konten dari data.json
+        // Cek apakah ada konten di data.json untuk judul ini
         let content = '';
         if (pageData.pages && pageData.pages[title]) {
             content = pageData.pages[title];
+        } else if (title === 'الأسماء الحسنى') {
+            // Pastikan asmaulhusna selalu ada
+            content = pageData.pages?.['الأسماء الحسنى'] || getFallbackAsmaulHusna();
         } else {
-            content = `<div class="arabic-text" style="text-align:center;padding:50px;">
-                <p>📖 ${title}</p>
-                <p style="font-size:0.9rem;margin-top:20px;color:var(--accent);">Konten belum tersedia di data.json</p>
-                <p style="font-size:0.8rem;margin-top:10px;">Silakan tambahkan entri "${title}" ke file data.json</p>
-            </div>`;
+            content = `<div class="arabic-text" style="text-align:center;padding:50px;"><p>📖 ${title}</p><p style="font-size:0.9rem;margin-top:20px;">Konten sedang disiapkan</p></div>`;
         }
         
         const mainContent = document.getElementById('mainContent');
@@ -449,28 +460,16 @@
         applyFontSettingsToContent();
         
         // Tampilkan tombol back
-        const backBtn = document.getElementById('backToToc');
-        if (backBtn) backBtn.style.display = 'flex';
-        
-        // Scroll ke atas
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.getElementById('backToToc').style.display = 'flex';
     }
     
     function goBackToToc() {
         currentPage = null;
         const mainContent = document.getElementById('mainContent');
-        mainContent.innerHTML = `
-            <div class="toc-list" id="tocContainer"></div>
-        `;
+        mainContent.innerHTML = `<div class="toc-list" id="tocContainer">Memuat daftar isi...</div>`;
         renderToc();
-        
-        const backBtn = document.getElementById('backToToc');
-        if (backBtn) backBtn.style.display = 'none';
-        
+        document.getElementById('backToToc').style.display = 'none';
         applyFontSettingsToContent();
-        
-        // Scroll ke atas
-        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
     function applyFontSettingsToContent() {
@@ -479,13 +478,12 @@
             container.style.fontSize = currentFontSize + 'px';
             container.style.fontFamily = currentFontFamily;
         }
-        
+        // Juga untuk konten dinamis
         const contentPage = document.getElementById('contentPage');
         if (contentPage) {
             contentPage.style.fontSize = currentFontSize + 'px';
             contentPage.style.fontFamily = currentFontFamily;
         }
-        
         const tocContainer = document.getElementById('tocContainer');
         if (tocContainer) {
             tocContainer.style.fontSize = currentFontSize + 'px';
@@ -502,35 +500,29 @@
     function loadSettings() {
         const savedSize = localStorage.getItem('dh_fontSize');
         if (savedSize) currentFontSize = parseInt(savedSize);
-        
         const savedFont = localStorage.getItem('dh_fontFamily');
-        if (savedFont) {
-            currentFontFamily = savedFont;
-            const fontSelect = document.getElementById('fontFamilySelect');
-            if (fontSelect) {
-                for (let i = 0; i < fontSelect.options.length; i++) {
-                    if (fontSelect.options[i].value === currentFontFamily) {
-                        fontSelect.selectedIndex = i;
-                        break;
-                    }
-                }
-            }
-        }
-        
+        if (savedFont) currentFontFamily = savedFont;
         const savedTheme = localStorage.getItem('dh_theme');
         if (savedTheme) {
             currentTheme = savedTheme;
             if (currentTheme === 'dark') {
                 document.body.classList.add('dark');
-                const themeBtn = document.getElementById('themeToggle');
-                if (themeBtn) themeBtn.innerHTML = '☀️ Terang';
+                document.getElementById('themeToggle').innerHTML = '☀️ Terang';
             } else {
                 document.body.classList.remove('dark');
-                const themeBtn = document.getElementById('themeToggle');
-                if (themeBtn) themeBtn.innerHTML = '🌙 Gelap';
+                document.getElementById('themeToggle').innerHTML = '🌙 Gelap';
             }
         }
-        
+        // Set select font
+        const fontSelect = document.getElementById('fontFamilySelect');
+        if (fontSelect && currentFontFamily) {
+            for (let i = 0; i < fontSelect.options.length; i++) {
+                if (fontSelect.options[i].value === currentFontFamily) {
+                    fontSelect.selectedIndex = i;
+                    break;
+                }
+            }
+        }
         applyFontSettingsToContent();
     }
     
@@ -549,25 +541,21 @@
         applyFontSettingsToContent();
         saveSettings();
     });
-    
     document.getElementById('fontMinus')?.addEventListener('click', () => {
         currentFontSize = Math.max(currentFontSize - 2, 12);
         applyFontSettingsToContent();
         saveSettings();
     });
-    
     document.getElementById('fontReset')?.addEventListener('click', () => {
         currentFontSize = 18;
         applyFontSettingsToContent();
         saveSettings();
     });
-    
     document.getElementById('fontFamilySelect')?.addEventListener('change', (e) => {
         currentFontFamily = e.target.value;
         applyFontSettingsToContent();
         saveSettings();
     });
-    
     document.getElementById('themeToggle')?.addEventListener('click', () => {
         if (currentTheme === 'light') {
             currentTheme = 'dark';
@@ -580,13 +568,13 @@
         }
         saveSettings();
     });
-    
     document.getElementById('backToToc')?.addEventListener('click', goBackToToc);
     
     // Inisialisasi
     async function init() {
-        loadSettings();
         await loadPageData();
+        renderToc();
+        loadSettings();
         applyFontSettingsToContent();
     }
     
