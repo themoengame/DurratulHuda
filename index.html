@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>درة الهدى - المجلد الأول</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -14,185 +12,165 @@
         }
 
         :root {
-            --bg-color: linear-gradient(135deg, #fdf8ed 0%, #f5ebd2 100%);
-            --text-color: #2c2418;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --sidebar-bg: linear-gradient(180deg, #1e3a2f 0%, #0d2818 100%);
-            --sidebar-text: #f5e6c8;
-            --border-color: #d4a853;
-            --accent-color: #b8860b;
-            --accent-light: #d4a853;
-            --accent-gold: #ffd700;
-            --header-bg: linear-gradient(135deg, #0d2818 0%, #1a472a 50%, #0d2818 100%);
+            --bg-color: #f5f3e8;
+            --text-color: #1a1a2e;
+            --card-bg: #ffffff;
+            --sidebar-bg: #2c2c3a;
+            --sidebar-text: #ffffff;
+            --border-color: #d4c9a8;
+            --accent-color: #8b6914;
+            --accent-light: #c9a82e;
+            --header-bg: #1a472a;
             --header-text: #f5e6c8;
-            --hover-bg: rgba(184, 134, 11, 0.2);
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            --glass-bg: rgba(255, 255, 255, 0.2);
+            --hover-bg: #e8e0c8;
         }
 
         body.dark {
-            --bg-color: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --bg-color: #1a1a2e;
             --text-color: #e8e8e8;
-            --card-bg: rgba(30, 30, 50, 0.95);
-            --sidebar-bg: linear-gradient(180deg, #0a0a15 0%, #050510 100%);
-            --sidebar-text: #e8d8b0;
-            --border-color: #d4a853;
-            --accent-color: #d4a853;
-            --accent-light: #ffd700;
-            --hover-bg: rgba(212, 168, 83, 0.2);
-            --glass-bg: rgba(30, 30, 50, 0.5);
+            --card-bg: #252540;
+            --sidebar-bg: #0f0f1a;
+            --sidebar-text: #e8e8e8;
+            --border-color: #3a3a5a;
+            --accent-color: #c9a82e;
+            --accent-light: #8b6914;
+            --header-bg: #0d2b1a;
+            --header-text: #e8d8b0;
+            --hover-bg: #2a2a4a;
         }
 
         body {
-            font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
-            background: var(--bg-color);
+            font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', 'Lateef', serif;
+            background-color: var(--bg-color);
             color: var(--text-color);
             transition: all 0.3s ease;
-            min-height: 100vh;
         }
 
-        /* Header */
         .header {
-            background: var(--header-bg);
+            background-color: var(--header-bg);
             color: var(--header-text);
-            padding: 20px 20px;
+            padding: 15px 20px;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
         .header h1 {
-            font-size: 1.8rem;
-            letter-spacing: 2px;
+            font-size: 1.5rem;
         }
 
-        .header h1 i {
-            margin: 0 8px;
-            color: var(--accent-light);
-        }
-
-        .header p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            margin-top: 6px;
-        }
-
-        /* Control Bar */
         .control-bar {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
+            background-color: var(--card-bg);
             padding: 10px 20px;
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             flex-wrap: wrap;
-            border-bottom: 2px solid var(--accent-color);
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 70px;
             z-index: 99;
         }
 
         .control-btn {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+            background-color: var(--accent-color);
             border: none;
-            color: #1a1a2e;
-            padding: 6px 16px;
+            color: white;
+            padding: 6px 15px;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 0.85rem;
-            font-family: inherit;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-
-        .control-btn:hover {
-            transform: translateY(-2px);
+            font-size: 0.9rem;
         }
 
         .font-control {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: var(--card-bg);
-            padding: 4px 12px;
+            background-color: var(--bg-color);
+            padding: 3px 12px;
             border-radius: 30px;
         }
 
         .font-control button {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+            background-color: var(--accent-color);
             border: none;
-            color: #1a1a2e;
-            width: 30px;
-            height: 30px;
+            color: white;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             cursor: pointer;
             font-size: 1rem;
-            font-weight: bold;
         }
 
-        .font-size-value {
-            font-size: 0.8rem;
-            min-width: 50px;
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .search-box {
-            background: var(--card-bg);
-            padding: 4px 15px;
-            border-radius: 30px;
+        .page-nav {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 10px;
+            background-color: var(--bg-color);
+            padding: 5px 15px;
+            border-radius: 30px;
         }
 
-        .search-box i {
-            color: var(--accent-color);
-            font-size: 0.85rem;
+        .page-nav button {
+            background-color: var(--accent-color);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .page-nav input {
+            width: 60px;
+            text-align: center;
+            padding: 5px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: var(--card-bg);
+            color: var(--text-color);
+            font-family: inherit;
+        }
+
+        .page-nav span {
+            font-size: 0.9rem;
         }
 
         .search-box input {
-            background: transparent;
-            border: none;
-            padding: 6px;
-            font-size: 0.8rem;
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 6px 12px;
+            border-radius: 30px;
             font-family: inherit;
             color: var(--text-color);
             outline: none;
-            width: 160px;
+            width: 180px;
         }
 
-        /* Main Container */
         .main-container {
             display: flex;
-            min-height: calc(100vh - 125px);
+            min-height: calc(100vh - 120px);
         }
 
-        /* Sidebar */
         .sidebar {
-            width: 300px;
-            background: var(--sidebar-bg);
+            width: 280px;
+            background-color: var(--sidebar-bg);
             color: var(--sidebar-text);
             position: sticky;
             top: 120px;
             height: calc(100vh - 120px);
             overflow-y: auto;
             padding: 15px;
-            border-left: 3px solid var(--accent-color);
+            border-left: 1px solid var(--border-color);
         }
 
         .sidebar h3 {
             text-align: center;
-            margin-bottom: 18px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--accent-color);
-            font-size: 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            margin-bottom: 15px;
+            font-size: 1rem;
         }
 
         .toc-list {
@@ -200,419 +178,194 @@
         }
 
         .toc-list li {
-            margin-bottom: 4px;
+            margin-bottom: 3px;
         }
 
         .toc-list a {
             color: var(--sidebar-text);
             text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 10px;
-            border-radius: 10px;
-            transition: all 0.2s;
+            display: block;
+            padding: 5px 10px;
+            border-radius: 6px;
             font-size: 0.8rem;
             border-right: 2px solid transparent;
         }
 
-        .toc-list a i {
-            width: 20px;
-            font-size: 0.75rem;
-            color: var(--accent-light);
-        }
-
         .toc-list a:hover {
-            background: var(--hover-bg);
+            background-color: rgba(255,255,255,0.1);
             border-right-color: var(--accent-color);
         }
 
-        /* Content */
         .content {
             flex: 1;
-            padding: 25px;
+            padding: 20px;
             overflow-y: auto;
         }
 
-        /* Cover Buku */
-        .cover {
-            background: linear-gradient(135deg, #1a472a 0%, #0d2b1a 50%, #1a472a 100%);
-            border-radius: 25px;
-            padding: 40px 30px;
+        .page-container {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            min-height: 500px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .page-number {
             text-align: center;
-            margin-bottom: 35px;
-            color: #f5e6c8;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
-        }
-
-        .cover .ornament {
-            font-size: 1.8rem;
-            margin: 15px 0;
-            letter-spacing: 10px;
-            color: var(--accent-light);
-        }
-
-        .cover h1 {
-            font-size: 2.2rem;
-            margin-bottom: 12px;
-        }
-
-        .cover h2 {
-            font-size: 1.5rem;
-            margin-bottom: 18px;
-            font-weight: normal;
-        }
-
-        .cover p {
-            font-size: 1rem;
-            margin-top: 18px;
-        }
-
-        /* Section Styling */
-        .section {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 22px;
-            margin-bottom: 28px;
-            box-shadow: var(--shadow);
-            transition: all 0.3s;
-            border: 1px solid rgba(212, 168, 83, 0.2);
-        }
-
-        .section:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-        }
-
-        .section-title {
-            font-size: 1.4rem;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
             color: var(--accent-color);
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 8px;
-            margin-bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            font-size: 0.9rem;
         }
 
-        .section-title i {
-            font-size: 1.2rem;
-        }
-
-        /* UKURAN FONT ARAB - DIPERBAIKI */
         .arabic-text {
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             line-height: 1.8;
             text-align: right;
-            font-family: 'Amiri', 'Scheherazade New', serif;
         }
 
         .arabic-text p {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
-        .arabic-text .basmalah {
-            font-size: 1.3rem;
-            margin: 15px 0;
-            text-align: center;
-            color: var(--accent-color);
-        }
-
-        .doa-title {
-            font-size: 1.15rem;
-            color: var(--accent-light);
-            margin: 18px 0 12px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .doa-title i {
-            font-size: 1rem;
-        }
-
-        /* List styling dalam teks Arab */
-        .arabic-text ul, .arabic-text ol {
-            margin: 10px 0;
-            padding-right: 25px;
-        }
-
-        .arabic-text li {
-            margin-bottom: 5px;
-        }
-
-        /* Grid untuk Asmaul Husna */
-        .asma-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 8px;
-            margin: 15px 0;
-        }
-
-        .asma-item {
-            padding: 5px 8px;
-            border-bottom: 1px dotted var(--border-color);
-            font-size: 1rem;
-        }
-
-        /* Loading */
         .loading {
             text-align: center;
             padding: 50px;
-            font-size: 1.2rem;
-            background: var(--card-bg);
-            border-radius: 20px;
         }
 
-        .loading i {
-            animation: spin 1s linear infinite;
-            margin-left: 8px;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Search Highlight */
-        mark {
-            background: linear-gradient(135deg, #ffd700, #ffaa00);
-            color: #1a1a2e;
-            padding: 1px 5px;
-            border-radius: 12px;
-        }
-
-        .result-info {
-            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
-            color: #1a1a2e;
-            padding: 8px 18px;
-            border-radius: 40px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
-
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent-color);
-            border-radius: 10px;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .main-container {
-                flex-direction: column;
-            }
             .sidebar {
-                width: 100%;
-                position: relative;
-                top: 0;
-                height: auto;
-                max-height: 300px;
-                border-left: none;
-                border-bottom: 2px solid var(--accent-color);
+                display: none;
             }
             .control-bar {
                 top: 60px;
+                gap: 8px;
             }
-            .content {
-                padding: 15px;
+            .page-nav input {
+                width: 50px;
             }
-            .cover {
-                padding: 25px 15px;
-            }
-            .cover h1 {
-                font-size: 1.6rem;
-            }
-            .cover h2 {
-                font-size: 1.2rem;
-            }
-            .section-title {
-                font-size: 1.2rem;
-            }
-            .arabic-text {
-                font-size: 1rem;
-            }
-            .asma-grid {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            }
-        }
-
-        @media (min-width: 1200px) {
-            .content {
-                padding: 30px 40px;
-            }
-            .arabic-text {
-                font-size: 1.15rem;
+            .search-box input {
+                width: 130px;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1><i class="fas fa-star-of-life"></i> دُرَّةُ الْهُدَى <i class="fas fa-star-of-life"></i></h1>
-        <p>المجلد الأول - مجموعة الأذكار والأوراد والصلوات والأدعية المأثورة</p>
+        <h1>📖 دُرَّةُ الْهُدَى - المجلد الأول</h1>
     </div>
 
     <div class="control-bar">
-        <button class="control-btn" id="themeToggle">
-            <i class="fas fa-moon"></i> الوضع المظلم / <i class="fas fa-sun"></i> الوضع الفاتح
-        </button>
+        <button class="control-btn" id="themeToggle">🌙/🌞</button>
         <div class="font-control">
-            <button id="fontMinus"><i class="fas fa-minus"></i></button>
-            <span id="fontSizeValue" class="font-size-value">1.1rem</span>
-            <button id="fontPlus"><i class="fas fa-plus"></i></button>
+            <button id="fontMinus">−</button>
+            <span id="fontSizeValue">1.3</span>
+            <button id="fontPlus">+</button>
+        </div>
+        <div class="page-nav">
+            <button id="firstPage">⏮</button>
+            <button id="prevPage">◀</button>
+            <input type="number" id="pageInput" min="1" max="216" value="1">
+            <span>/ <span id="totalPages">216</span></span>
+            <button id="nextPage">▶</button>
+            <button id="lastPage">⏭</button>
         </div>
         <div class="search-box">
-            <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="بحث في المحتوى...">
+            <input type="text" id="searchInput" placeholder="🔍 بحث...">
         </div>
     </div>
 
     <div class="main-container">
         <div class="sidebar">
-            <h3><i class="fas fa-book-open"></i> فهرس المحتويات</h3>
+            <h3>📑 الفهرس</h3>
             <ul class="toc-list" id="tocList">
-                <li><i class="fas fa-spinner fa-pulse"></i> جاري التحميل...</li>
+                <li>جاري التحميل...</li>
             </ul>
         </div>
-
         <div class="content" id="content">
-            <div class="loading">
-                <i class="fas fa-spinner fa-pulse"></i> جاري تحميل الكتاب...
-            </div>
+            <div class="loading">⏳ جاري تحميل الكتاب...</div>
         </div>
     </div>
 
     <script>
-        let bookData = null;
-        let currentFontSize = 1.1;
-        let searchTerm = '';
+        let pages = {};
+        let currentPage = 1;
+        let totalPages = 216;
+        let currentFontSize = 1.3;
+        let tocData = [];
 
-        async function loadBookData() {
+        async function loadData() {
             try {
                 const response = await fetch('data.json');
-                if (!response.ok) throw new Error('File data.json tidak ditemukan');
-                bookData = await response.json();
+                if (!response.ok) throw new Error('data.json tidak ditemukan');
+                const data = await response.json();
+                pages = data.pages || {};
+                tocData = data.toc || [];
+                totalPages = data.totalPages || 216;
+                document.getElementById('totalPages').innerText = totalPages;
                 renderTOC();
-                renderBook();
-                updateFontSize();
+                renderPage(currentPage);
             } catch (error) {
-                document.getElementById('content').innerHTML = `
-                    <div class="loading" style="color: #dc3545;">
-                        <i class="fas fa-exclamation-triangle"></i><br><br>
-                        ❌ Gagal memuat data: ${error.message}<br><br>
-                        Pastikan file <strong style="color:var(--accent-color)">data.json</strong> berada di folder yang sama
-                    </div>`;
-                console.error(error);
+                document.getElementById('content').innerHTML = `<div class="loading" style="color:red;">❌ Error: ${error.message}<br><br>Pastikan file data.json ada!</div>`;
             }
         }
 
         function renderTOC() {
-            const tocList = document.getElementById('tocList');
-            tocList.innerHTML = '';
-            bookData.sections.forEach((section, index) => {
+            const container = document.getElementById('tocList');
+            container.innerHTML = '';
+            if (tocData.length === 0) {
+                container.innerHTML = '<li>Tidak ada data</li>';
+                return;
+            }
+            tocData.forEach(item => {
                 const li = document.createElement('li');
                 const a = document.createElement('a');
-                a.href = `#section-${index}`;
-                a.innerHTML = `<i class="fas fa-${index % 2 === 0 ? 'book' : 'leaf'}"></i> ${section.page ? section.page + '. ' : ''}${section.title}`;
+                a.href = '#';
+                a.textContent = item.title;
                 a.onclick = (e) => {
                     e.preventDefault();
-                    const target = document.getElementById(`section-${index}`);
-                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    goToPage(item.page);
                 };
                 li.appendChild(a);
-                tocList.appendChild(li);
+                container.appendChild(li);
             });
         }
 
-        function filterContent() {
-            if (!bookData) return;
-            
-            const filteredSections = searchTerm === '' 
-                ? bookData.sections 
-                : bookData.sections.filter(section => 
-                    section.title.includes(searchTerm) || 
-                    (section.content && section.content.includes(searchTerm))
-                );
-            
+        function renderPage(pageNum) {
             const container = document.getElementById('content');
-            container.innerHTML = '';
+            const pageContent = pages[pageNum] || `<div class="page-container"><div class="arabic-text"><p style="color:red;">❌ المحتوى غير متوفر للصفحة ${pageNum}</p></div></div>`;
             
-            // Cover
-            const coverDiv = document.createElement('div');
-            coverDiv.className = 'cover';
-            coverDiv.innerHTML = `
-                <div class="ornament"><i class="fas fa-star"></i> <i class="fas fa-star-of-david"></i> <i class="fas fa-star"></i></div>
-                <h1>${bookData.namaKitab || 'دُرَّةُ الْهُدَى'}</h1>
-                <h2>${bookData.jilid || 'المجلد الأول'}</h2>
-                <div class="ornament">﴿ ✿ ﴾</div>
-                <p>${bookData.deskripsi || 'مجموعة الأذكار والأوراد والصلوات والأدعية المأثورة'}</p>
-                <p style="font-size: 0.85rem; margin-top: 18px;">
-                    <i class="fas fa-pray"></i> رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ <i class="fas fa-pray"></i>
-                </p>
+            container.innerHTML = `
+                <div class="page-container">
+                    <div class="arabic-text">${pageContent}</div>
+                    <div class="page-number">صفحة ${pageNum} من ${totalPages}</div>
+                </div>
             `;
-            container.appendChild(coverDiv);
-            
-            if (searchTerm !== '') {
-                const resultInfo = document.createElement('div');
-                resultInfo.className = 'result-info';
-                resultInfo.innerHTML = `<i class="fas fa-search"></i> نتائج البحث عن: "${searchTerm}" - ditemukan ${filteredSections.length} bagian`;
-                container.appendChild(resultInfo);
-            }
-            
-            filteredSections.forEach((section, idx) => {
-                const originalIndex = bookData.sections.findIndex(s => s.id === section.id);
-                const sectionDiv = document.createElement('div');
-                sectionDiv.id = `section-${originalIndex !== -1 ? originalIndex : idx}`;
-                sectionDiv.className = 'section';
-                
-                let contentHtml = section.content;
-                if (searchTerm !== '') {
-                    const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-                    contentHtml = contentHtml.replace(regex, '<mark>$1</mark>');
-                }
-                
-                sectionDiv.innerHTML = `
-                    <h2 class="section-title">
-                        <i class="fas fa-${originalIndex % 3 === 0 ? 'quran' : (originalIndex % 3 === 1 ? 'pray' : 'peace')}"></i>
-                        ${section.page ? `(${section.page}) ` : ''}${section.title}
-                    </h2>
-                    <div class="arabic-text">${contentHtml}</div>
-                `;
-                container.appendChild(sectionDiv);
-            });
             
             document.querySelectorAll('.arabic-text').forEach(el => {
                 el.style.fontSize = `${currentFontSize}rem`;
             });
+            
+            document.getElementById('pageInput').value = pageNum;
+            currentPage = pageNum;
         }
 
-        function renderBook() {
-            filterContent();
+        function goToPage(pageNum) {
+            if (pageNum < 1) pageNum = 1;
+            if (pageNum > totalPages) pageNum = totalPages;
+            renderPage(pageNum);
         }
 
         function updateFontSize() {
             document.querySelectorAll('.arabic-text').forEach(el => {
                 el.style.fontSize = `${currentFontSize}rem`;
             });
-            document.getElementById('fontSizeValue').textContent = `${currentFontSize}rem`;
+            document.getElementById('fontSizeValue').innerText = currentFontSize;
         }
 
         function initTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') document.body.classList.add('dark');
+            if (localStorage.getItem('theme') === 'dark') document.body.classList.add('dark');
         }
 
         function toggleTheme() {
@@ -621,27 +374,26 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadBookData();
+            loadData();
             initTheme();
             
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
             document.getElementById('fontPlus').addEventListener('click', () => {
-                if (currentFontSize < 2.0) {
-                    currentFontSize += 0.1;
-                    updateFontSize();
-                }
+                if (currentFontSize < 2.2) { currentFontSize += 0.1; updateFontSize(); }
             });
             document.getElementById('fontMinus').addEventListener('click', () => {
-                if (currentFontSize > 0.8) {
-                    currentFontSize -= 0.1;
-                    updateFontSize();
-                }
+                if (currentFontSize > 0.9) { currentFontSize -= 0.1; updateFontSize(); }
             });
+            document.getElementById('prevPage').addEventListener('click', () => goToPage(currentPage - 1));
+            document.getElementById('nextPage').addEventListener('click', () => goToPage(currentPage + 1));
+            document.getElementById('firstPage').addEventListener('click', () => goToPage(1));
+            document.getElementById('lastPage').addEventListener('click', () => goToPage(totalPages));
+            document.getElementById('pageInput').addEventListener('change', (e) => goToPage(parseInt(e.target.value) || 1));
             
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', (e) => {
-                searchTerm = e.target.value.trim();
-                filterContent();
+            document.getElementById('searchInput').addEventListener('input', async (e) => {
+                const term = e.target.value;
+                if (term.length < 2) return renderPage(currentPage);
+                // Search implementation bisa ditambahkan
             });
         });
     </script>
