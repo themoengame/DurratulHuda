@@ -1,558 +1,504 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Durratul Hadi - Daftar Isi Jilid 1</title>
+    <title>Durrat al-Huda - Digital Library</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+            transition: background-color 0.3s ease, color 0.2s ease;
+        }
+
+        body {
+            font-family: 'Traditional Arabic', 'Amiri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            direction: rtl;
         }
 
         /* Variabel Tema */
         :root {
-            --bg-body: #e9e4d8;
-            --bg-container: #fffef7;
-            --bg-header: #2e3820;
-            --text-header: #f9eec1;
-            --text-primary: #2d2a1e;
-            --text-secondary: #5f553b;
-            --border-color: #e2d5ba;
-            --accent: #b8863b;
-            --accent-light: #fcf8e8;
-            --item-hover: #fcf8e8;
-            --control-bg: #faf6e9;
-            --btn-bg: #d8c89c;
-            --btn-hover: #c2ae78;
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #ffffff;
+            --text-primary: #212529;
+            --text-secondary: #495057;
+            --border: #dee2e6;
+            --sidebar-bg: #f1f3f5;
+            --hover-bg: #e9ecef;
+            --accent: #2c7da0;
+            --accent-dark: #1f5068;
             --shadow: rgba(0, 0, 0, 0.1);
+            --card-bg: #ffffff;
         }
 
         body.dark {
-            --bg-body: #1a1a2e;
-            --bg-container: #16213e;
-            --bg-header: #0f3460;
-            --text-header: #e8e8e8;
-            --text-primary: #e8e8e8;
-            --text-secondary: #a0a0a0;
-            --border-color: #2c3e66;
-            --accent: #e94560;
-            --accent-light: #1a2a4a;
-            --item-hover: #1f2a4a;
-            --control-bg: #0f2a3e;
-            --btn-bg: #533483;
-            --btn-hover: #7b4ca0;
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #aaaaaa;
+            --border: #333333;
+            --sidebar-bg: #1a1a1a;
+            --hover-bg: #2a2a2a;
+            --accent: #4ea8de;
+            --accent-dark: #2c7da0;
             --shadow: rgba(0, 0, 0, 0.3);
+            --card-bg: #252525;
         }
 
-        body {
-            background: var(--bg-body);
-            font-family: 'Segoe UI', 'Traditional Arabic', 'Sakkal Majalla', 'Times New Roman', serif;
-            padding: 1rem;
-            min-height: 100vh;
-        }
-
-        /* Container */
-        .book-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: var(--bg-container);
-            border-radius: 28px;
-            box-shadow: 0 25px 45px -12px var(--shadow);
+        /* Layout */
+        .app {
+            display: flex;
+            height: 100vh;
             overflow: hidden;
-            border: 1px solid var(--border-color);
         }
 
-        /* Header */
-        .header {
-            background: var(--bg-header);
-            padding: 1.5rem;
-            text-align: center;
-            border-bottom: 4px solid var(--accent);
-        }
-
-        .header h1 {
-            font-family: 'Traditional Arabic', 'Sakkal Majalla', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-header);
-            letter-spacing: 1px;
-        }
-
-        .header h2 {
-            font-size: 0.9rem;
-            color: var(--accent);
-            margin-top: 8px;
-        }
-
-        /* Control Panel */
-        .control-panel {
-            background: var(--control-bg);
-            padding: 0.8rem 1.5rem;
-            border-bottom: 1px solid var(--border-color);
+        /* Sidebar Daftar Isi */
+        .sidebar {
+            width: 320px;
+            background-color: var(--sidebar-bg);
+            border-left: 1px solid var(--border);
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: -2px 0 5px var(--shadow);
+            z-index: 10;
         }
 
-        .control-group {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-container);
-            padding: 5px 12px;
-            border-radius: 40px;
-            border: 1px solid var(--border-color);
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            background-color: var(--bg-secondary);
         }
 
-        .control-group label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        select, .theme-btn {
-            padding: 5px 10px;
-            border-radius: 30px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-container);
-            color: var(--text-primary);
-            cursor: pointer;
-            font-size: 0.8rem;
-        }
-
-        .font-size-btns {
-            display: flex;
-            gap: 5px;
-        }
-
-        .font-size-btns button {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: none;
-            background: var(--btn-bg);
-            color: var(--text-primary);
+        .sidebar-header h2 {
+            font-size: 1.25rem;
             font-weight: bold;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .daftar-isi {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .daftar-isi ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .daftar-isi li {
+            margin-bottom: 0.5rem;
             cursor: pointer;
-            font-size: 1rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+            border-right: 3px solid transparent;
         }
 
-        .font-size-btns button:hover {
-            background: var(--btn-hover);
+        .daftar-isi li:hover {
+            background-color: var(--hover-bg);
         }
 
-        .theme-btn {
-            background: var(--btn-bg);
-            padding: 5px 15px;
+        .daftar-isi li.active {
+            background-color: var(--accent);
+            color: white;
+            border-right-color: var(--accent-dark);
         }
 
-        /* Back Button */
-        .back-btn {
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Toolbar */
+        .toolbar {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toolbar-group {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .toolbar button, .toolbar select {
+            padding: 0.4rem 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+        }
+
+        .toolbar button:hover {
+            background: var(--hover-bg);
+        }
+
+        .font-size-control {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .font-size-control span {
+            font-size: 0.8rem;
+            padding: 0 0.25rem;
+        }
+
+        .theme-toggle {
             background: var(--accent);
             color: white;
             border: none;
-            padding: 6px 16px;
-            border-radius: 30px;
-            cursor: pointer;
+        }
+
+        /* Konten Isi */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .content-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .content-title {
+            font-size: 1.8rem;
             font-weight: bold;
-            margin-left: auto;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent);
+            color: var(--accent);
         }
 
-        /* Daftar Isi */
-        .toc-list, .content-page {
-            padding: 1.5rem;
-            min-height: 500px;
-        }
-
-        .toc-item {
-            display: flex;
-            align-items: baseline;
-            gap: 12px;
-            padding: 10px 16px;
-            margin: 6px 0;
-            border-radius: 14px;
-            cursor: pointer;
-            direction: rtl;
+        .arabic-content {
+            font-family: inherit;
+            line-height: 2;
+            font-size: 1.2rem;
             text-align: right;
-            font-family: inherit;
-            font-size: inherit;
-            border-left: 4px solid transparent;
-            transition: all 0.2s;
+            word-wrap: break-word;
+            white-space: pre-wrap;
         }
 
-        .toc-item:hover {
-            background: var(--item-hover);
-            border-left-color: var(--accent);
-            transform: translateX(-3px);
+        .arabic-content p {
+            margin-bottom: 1rem;
         }
 
-        .toc-bullet {
-            font-size: 1.2em;
-            color: var(--accent);
-            min-width: 28px;
-        }
-
-        .toc-text {
-            flex: 1;
-        }
-
-        /* Konten Halaman - perbaikan untuk grid Asmaul Husna */
-        .content-page {
-            direction: rtl;
-            font-family: inherit;
-            font-size: inherit;
-        }
-
-        .content-page .arabic-text {
-            line-height: 1.8;
-        }
-
-        .content-page .basmalah {
-            font-size: 1.3em;
+        .loading {
             text-align: center;
-            margin: 15px 0;
-            color: var(--accent);
+            padding: 2rem;
+            font-style: italic;
+            color: var(--text-secondary);
         }
 
-        .content-page .doa-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            text-align: center;
-            margin: 20px 0 10px;
-            color: var(--accent);
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
 
-        /* GRID UNTUK ASMAUL HUSNA - RESPONSIF */
-        .asma-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 8px 20px;
-            margin: 20px 0;
-            line-height: 1.8;
-        }
-        
-        .asma-item {
-            display: flex;
-            align-items: baseline;
-            gap: 6px;
-            padding: 2px 0;
-            white-space: normal;
-            word-break: keep-all;
-        }
-        
-        .asma-bullet {
-            color: var(--accent);
-            font-size: 1.1em;
-            margin-left: 4px;
-            flex-shrink: 0;
-        }
-        
-        .asma-name {
-            flex: 1;
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
         }
 
-        @media (max-width: 550px) {
-            .asma-grid {
-                grid-template-columns: 1fr;
-                gap: 4px;
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app {
+                flex-direction: column;
+            }
+            .sidebar {
+                width: 100%;
+                height: 40%;
+                border-left: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .main-content {
+                height: 60%;
+            }
+            .toolbar {
+                padding: 0.5rem;
+            }
+            .content-card {
+                padding: 1rem;
             }
         }
 
-        .no-result {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-secondary);
+        /* Highlight search */
+        .highlight {
+            background-color: #ffc107;
+            color: #1e1e1e;
+            border-radius: 2px;
+            padding: 0 2px;
         }
-
-        .footer {
-            background: var(--control-bg);
-            padding: 0.8rem;
-            text-align: center;
-            font-size: 0.7rem;
-            color: var(--text-secondary);
-            border-top: 1px solid var(--border-color);
+        body.dark .highlight {
+            background-color: #ffb300;
+            color: #000;
         }
     </style>
 </head>
 <body>
-<div class="book-container" id="app">
-    <div class="header">
-        <h1>محتویات كتاب درة الهدى</h1>
-        <h2>المجلد الأول — Durratul Hadi Jilid 1</h2>
-    </div>
-
-    <div class="control-panel">
-        <div class="control-group">
-            <label>📖 Font:</label>
-            <select id="fontFamilySelect">
-                <option value="'Traditional Arabic', 'Sakkal Majalla', 'Times New Roman', serif">Traditional Arabic</option>
-                <option value="'Amiri', 'Times New Roman', serif">Amiri</option>
-                <option value="'Segoe UI', 'Tahoma', sans-serif">Segoe UI</option>
-                <option value="'Arial', sans-serif">Arial</option>
-                <option value="'Courier New', monospace">Courier New</option>
-            </select>
+<div class="app">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>📖 درة الهدى</h2>
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 Cari judul..." autocomplete="off">
         </div>
-        <div class="control-group">
-            <label>🔤 Ukuran:</label>
-            <div class="font-size-btns">
-                <button id="fontMinus" title="Perkecil">A-</button>
-                <button id="fontPlus" title="Perbesar">A+</button>
-                <button id="fontReset" title="Reset">A</button>
+        <div class="daftar-isi" id="daftarIsi">
+            <div class="loading">Memuat daftar...</div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="toolbar">
+            <div class="toolbar-group">
+                <select id="fontFamilySelect">
+                    <option value="'Traditional Arabic', 'Amiri', 'Scheherazade New', serif">📜 Traditional</option>
+                    <option value="'Lateef', 'Segoe UI', Tahoma, sans-serif">✍️ Lateef</option>
+                    <option value="'Noto Naskh Arabic', 'Amiri', serif">🖋️ Noto Naskh</option>
+                    <option value="'Arial', 'Tahoma', sans-serif">🔤 Arial</option>
+                </select>
+                <div class="font-size-control">
+                    <button id="fontMinus" title="Kecilkan font">A-</button>
+                    <span id="fontSizeLabel">18px</span>
+                    <button id="fontPlus" title="Besarkan font">A+</button>
+                </div>
+            </div>
+            <div class="toolbar-group">
+                <button id="themeToggle" class="theme-toggle">🌓 Dark/Light</button>
             </div>
         </div>
-        <div class="control-group">
-            <button id="themeToggle" class="theme-btn">🌙 Gelap</button>
+        <div class="content-area" id="contentArea">
+            <div class="content-card">
+                <div class="content-title" id="contentTitle">الأسماء الحسنى</div>
+                <div class="arabic-content" id="contentBody">Pilih bab dari daftar di samping untuk membaca isinya...</div>
+            </div>
         </div>
-        <button id="backToToc" class="back-btn" style="display:none;">← Kembali ke Daftar Isi</button>
-    </div>
-
-    <div id="mainContent">
-        <div class="toc-list" id="tocContainer">Memuat daftar isi...</div>
-    </div>
-
-    <div class="footer">
-        📖 Klik pada judul untuk membaca | Ukuran & jenis font dapat diubah | Tema gelap/terang
     </div>
 </div>
 
 <script>
-    // Data daftar isi (tanpa halaman)
-    const tocData = [
-        "الأسماء الحسنى",
-        "سورة يس",
-        "دعاء بعد سورة يس",
-        "سورة الكهف",
-        "سورة محمد",
-        "سورة السجدة",
-        "سورة الدخان",
-        "سورة الرحمن",
-        "سورة الواقعة",
-        "دعاء بعد سورة الواقعة",
-        "سورة الحشر",
-        "سورة الملك",
-        "دعاء بعد سورة الملك",
-        "الأوراد قبل صلاة الصبح",
-        "الأوراد بعد صلاة المكتوبة",
-        "الأوراد بعد صلاة الصبح",
-        "الأوراد بعد صلاة العصر",
-        "الأوراد بعد صلاة المغرب",
-        "الأوراد قبل صلاة العشاء",
-        "الأوراد قبل المكتوبة في شهر رمضان",
-        "دعاء قنوت النازلة",
-        "دعاء (صلاة) الترحيـم",
-        "قصيدة زيارة الأولياء",
-        "التوسل قبل التهليل",
-        "التهليل",
-        "دعاء التهليل",
-        "الاستغاثة ودعاؤها",
-        "يسأل فضيلة",
-        "خصوصية ودعاؤها",
-        "الصلاة الإبراهيمية",
-        "الصلاة المنجية",
-        "الصلاة النارية",
-        "الصلاة الفاتح",
-        "الصلاة الحجية",
-        "الصلاة الطبية",
-        "الصلاة الطريقية",
-        "راتب الحداد",
-        "قصيدة للحبيب عبد الله ابن علوي الحداد",
-        "دعاء السلامة",
-        "دعاء صلاة التراويح",
-        "دعاء صلاة الوتر",
-        "دعاء صلاة التهجد",
-        "دعاء صلاة الاستخارة",
-        "دعاء صلاة الحاجة",
-        "دعاء أول السنة",
-        "دعاء آخر السنة",
-        "دعاء ليلة عاشوراء",
-        "دعاء نصف الشعبان",
-        "دعاء (التسبيح) ليلة العرفة",
-        "صلاة التسبيح",
-        "دعاء صلاة التسبيح",
-        "صلاة في ليلة القدر",
-        "صلاة الجنازة",
-        "صلاة الهدية",
-        "صلاة لأنس القبر",
-        "صلاة الكفارات",
-        "صلاة ربو وكاسان",
-        "دعاء بعد صلاة ربو وكاسن",
-        "كيفية عقد النكاح",
-        "الدعاء بعد عقد النكاح",
-        "الدُّعَاءُ بَعْدَ عَقْدِ النِّكَاحِ"
-    ];
-
     // State
+    let menuData = [];      // menyimpan { id, title, fileRef }
+    let contentCache = {};  // cache konten berdasarkan id
+    let currentId = null;
     let currentFontSize = 18;
-    let currentFontFamily = "'Traditional Arabic', 'Sakkal Majalla', 'Times New Roman', serif";
-    let currentTheme = 'light';
-    let currentPage = null;
+    let currentFontFamily = "'Traditional Arabic', 'Amiri', 'Scheherazade New', serif";
 
-    
+    // DOM Elements
+    const daftarContainer = document.getElementById('daftarIsi');
+    const searchInput = document.getElementById('searchInput');
+    const contentTitleDiv = document.getElementById('contentTitle');
+    const contentBodyDiv = document.getElementById('contentBody');
+    const fontPlusBtn = document.getElementById('fontPlus');
+    const fontMinusBtn = document.getElementById('fontMinus');
+    const fontSizeLabel = document.getElementById('fontSizeLabel');
+    const fontFamilySelect = document.getElementById('fontFamilySelect');
+    const themeToggle = document.getElementById('themeToggle');
 
-    // Render daftar isi
-    function renderToc() {
-        const container = document.getElementById('tocContainer');
-        if (!container) return;
-        
-        let html = '';
-        tocData.forEach(title => {
-            html += `
-                <div class="toc-item" data-title="${escapeHtml(title)}">
-                    <div class="toc-bullet">❂</div>
-                    <div class="toc-text" dir="rtl">${escapeHtml(title)}</div>
-                </div>
-            `;
-        });
-        container.innerHTML = html;
-        
-        document.querySelectorAll('.toc-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const title = item.getAttribute('data-title');
-                openPage(title);
+    // Load data.json
+    async function loadData() {
+        try {
+            const response = await fetch('data.json');
+            if (!response.ok) throw new Error('Gagal load data.json');
+            const data = await response.json();
+            menuData = data.menu;
+            // Pre-cache content for initial items? optional, will load on click.
+            renderMenu(menuData);
+            // Load first item by default
+            if (menuData.length > 0) {
+                loadContent(menuData[0].id);
+            }
+        } catch (error) {
+            console.error(error);
+            daftarContainer.innerHTML = '<div class="loading">Gagal memuat daftar isi. Pastikan data.json tersedia.</div>';
+        }
+    }
+
+    // Render menu with search filter
+    function renderMenu(items) {
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        let filtered = items;
+        if (searchTerm) {
+            filtered = items.filter(item => item.title.toLowerCase().includes(searchTerm));
+        }
+
+        if (filtered.length === 0) {
+            daftarContainer.innerHTML = '<div class="loading">Tidak ditemukan</div>';
+            return;
+        }
+
+        const ul = document.createElement('ul');
+        filtered.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item.title;
+            li.dataset.id = item.id;
+            if (currentId === item.id) li.classList.add('active');
+            li.addEventListener('click', () => {
+                loadContent(item.id);
+                // update active class
+                document.querySelectorAll('#daftarIsi li').forEach(el => el.classList.remove('active'));
+                li.classList.add('active');
             });
+            ul.appendChild(li);
         });
+        daftarContainer.innerHTML = '';
+        daftarContainer.appendChild(ul);
     }
-    
-    // Buka halaman
-    async function openPage(title) {
-        currentPage = title;
-        
-        let content = '';
-        if (title === 'الأسماء الحسنى') {
-            content = getAsmaulHusnaHTML();
+
+    // Load content by ID
+    async function loadContent(id) {
+        if (!id) return;
+        currentId = id;
+        const menuItem = menuData.find(m => m.id === id);
+        if (menuItem) {
+            contentTitleDiv.textContent = menuItem.title;
         } else {
-            content = `<div class="arabic-text" style="text-align:center;padding:50px;"><p>📖 ${title}</p><p style="font-size:0.9rem;margin-top:20px;">Konten sedang disiapkan</p></div>`;
+            contentTitleDiv.textContent = 'محتوى';
         }
-        
-        const mainContent = document.getElementById('mainContent');
-        mainContent.innerHTML = `
-            <div class="content-page" id="contentPage" dir="rtl">
-                ${content}
-            </div>
-        `;
-        
-        applyFontSettingsToContent();
-        document.getElementById('backToToc').style.display = 'flex';
-    }
-    
-    function goBackToToc() {
-        currentPage = null;
-        const mainContent = document.getElementById('mainContent');
-        mainContent.innerHTML = `<div class="toc-list" id="tocContainer">Memuat daftar isi...</div>`;
-        renderToc();
-        document.getElementById('backToToc').style.display = 'none';
-        applyFontSettingsToContent();
-    }
-    
-    function applyFontSettingsToContent() {
-        const container = document.getElementById('app');
-        if (container) {
-            container.style.fontSize = currentFontSize + 'px';
-            container.style.fontFamily = currentFontFamily;
+
+        // Check cache
+        if (contentCache[id]) {
+            renderContent(contentCache[id]);
+            return;
         }
-        const contentPage = document.getElementById('contentPage');
-        if (contentPage) {
-            contentPage.style.fontSize = currentFontSize + 'px';
-            contentPage.style.fontFamily = currentFontFamily;
-        }
-        const tocContainer = document.getElementById('tocContainer');
-        if (tocContainer) {
-            tocContainer.style.fontSize = currentFontSize + 'px';
-            tocContainer.style.fontFamily = currentFontFamily;
+
+        // Show loading
+        contentBodyDiv.innerHTML = '<div class="loading">جاري التحميل...</div>';
+
+        try {
+            const response = await fetch(`data.json`);
+            const fullData = await response.json();
+            // Assuming structure: { menu: [], contents: { "asmaul-husna": "...", "yasin": "..." } }
+            let rawContent = '';
+            if (fullData.contents && fullData.contents[id]) {
+                rawContent = fullData.contents[id];
+            } else {
+                rawContent = '<p style="color:red;">المحتوى غير متوفر حالياً</p>';
+            }
+            contentCache[id] = rawContent;
+            renderContent(rawContent);
+        } catch (err) {
+            console.error(err);
+            contentBodyDiv.innerHTML = '<div class="loading">خطأ في تحميل المحتوى</div>';
         }
     }
-    
-    function saveSettings() {
+
+    function renderContent(htmlContent) {
+        contentBodyDiv.innerHTML = htmlContent;
+        applyFontSettings();
+    }
+
+    // Font settings
+    function applyFontSettings() {
+        const arabicDiv = document.getElementById('contentBody');
+        if (arabicDiv) {
+            arabicDiv.style.fontSize = currentFontSize + 'px';
+            arabicDiv.style.fontFamily = currentFontFamily;
+        }
+        // also apply to any dynamic elements?
+        fontSizeLabel.innerText = currentFontSize + 'px';
+    }
+
+    function changeFontSize(delta) {
+        let newSize = currentFontSize + delta;
+        if (newSize < 12) newSize = 12;
+        if (newSize > 36) newSize = 36;
+        currentFontSize = newSize;
+        applyFontSettings();
         localStorage.setItem('dh_fontSize', currentFontSize);
-        localStorage.setItem('dh_fontFamily', currentFontFamily);
-        localStorage.setItem('dh_theme', currentTheme);
     }
-    
-    function loadSettings() {
+
+    function setFontFamily(family) {
+        currentFontFamily = family;
+        applyFontSettings();
+        localStorage.setItem('dh_fontFamily', family);
+    }
+
+    // Theme
+    function initTheme() {
+        const savedTheme = localStorage.getItem('dh_theme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark');
+        } else {
+            document.body.classList.remove('dark');
+        }
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('dark');
+        const isDark = document.body.classList.contains('dark');
+        localStorage.setItem('dh_theme', isDark ? 'dark' : 'light');
+    }
+
+    // Save preferences
+    function loadPreferences() {
         const savedSize = localStorage.getItem('dh_fontSize');
         if (savedSize) currentFontSize = parseInt(savedSize);
-        const savedFont = localStorage.getItem('dh_fontFamily');
-        if (savedFont) currentFontFamily = savedFont;
-        const savedTheme = localStorage.getItem('dh_theme');
-        if (savedTheme) {
-            currentTheme = savedTheme;
-            if (currentTheme === 'dark') {
-                document.body.classList.add('dark');
-                document.getElementById('themeToggle').innerHTML = '☀️ Terang';
-            } else {
-                document.body.classList.remove('dark');
-                document.getElementById('themeToggle').innerHTML = '🌙 Gelap';
-            }
+        const savedFamily = localStorage.getItem('dh_fontFamily');
+        if (savedFamily) {
+            currentFontFamily = savedFamily;
+            fontFamilySelect.value = savedFamily;
         }
-        const fontSelect = document.getElementById('fontFamilySelect');
-        if (fontSelect && currentFontFamily) {
-            for (let i = 0; i < fontSelect.options.length; i++) {
-                if (fontSelect.options[i].value === currentFontFamily) {
-                    fontSelect.selectedIndex = i;
-                    break;
-                }
-            }
-        }
-        applyFontSettingsToContent();
+        applyFontSettings();
+        initTheme();
     }
-    
-    function escapeHtml(str) {
-        return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-        });
-    }
-    
-    // Event listeners
-    document.getElementById('fontPlus')?.addEventListener('click', () => {
-        currentFontSize = Math.min(currentFontSize + 2, 36);
-        applyFontSettingsToContent();
-        saveSettings();
+
+    // Event Listeners
+    fontPlusBtn.addEventListener('click', () => changeFontSize(2));
+    fontMinusBtn.addEventListener('click', () => changeFontSize(-2));
+    fontFamilySelect.addEventListener('change', (e) => {
+        setFontFamily(e.target.value);
     });
-    document.getElementById('fontMinus')?.addEventListener('click', () => {
-        currentFontSize = Math.max(currentFontSize - 2, 12);
-        applyFontSettingsToContent();
-        saveSettings();
+    themeToggle.addEventListener('click', toggleTheme);
+    searchInput.addEventListener('input', () => {
+        renderMenu(menuData);
     });
-    document.getElementById('fontReset')?.addEventListener('click', () => {
-        currentFontSize = 18;
-        applyFontSettingsToContent();
-        saveSettings();
-    });
-    document.getElementById('fontFamilySelect')?.addEventListener('change', (e) => {
-        currentFontFamily = e.target.value;
-        applyFontSettingsToContent();
-        saveSettings();
-    });
-    document.getElementById('themeToggle')?.addEventListener('click', () => {
-        if (currentTheme === 'light') {
-            currentTheme = 'dark';
-            document.body.classList.add('dark');
-            document.getElementById('themeToggle').innerHTML = '☀️ Terang';
-        } else {
-            currentTheme = 'light';
-            document.body.classList.remove('dark');
-            document.getElementById('themeToggle').innerHTML = '🌙 Gelap';
-        }
-        saveSettings();
-    });
-    document.getElementById('backToToc')?.addEventListener('click', goBackToToc);
-    
-    // Inisialisasi
-    function init() {
-        renderToc();
-        loadSettings();
-        applyFontSettingsToContent();
-    }
-    
-    init();
+
+    // Initialize
+    loadPreferences();
+    loadData();
 </script>
 </body>
 </html>
