@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>درة الهدى - المجلد الأول</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,49 +14,53 @@
         }
 
         :root {
-            --bg-color: #f5f3e8;
-            --text-color: #1a1a2e;
-            --card-bg: #ffffff;
-            --sidebar-bg: #2c2c3a;
-            --sidebar-text: #ffffff;
-            --border-color: #d4c9a8;
-            --accent-color: #8b6914;
-            --accent-light: #c9a82e;
-            --header-bg: #1a472a;
+            --bg-color: linear-gradient(135deg, #fdf8ed 0%, #f5ebd2 100%);
+            --text-color: #2c2418;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --sidebar-bg: linear-gradient(180deg, #1e3a2f 0%, #0d2818 100%);
+            --sidebar-text: #f5e6c8;
+            --border-color: #d4a853;
+            --accent-color: #b8860b;
+            --accent-light: #d4a853;
+            --accent-gold: #ffd700;
+            --header-bg: linear-gradient(135deg, #0d2818 0%, #1a472a 50%, #0d2818 100%);
             --header-text: #f5e6c8;
-            --hover-bg: #e8e0c8;
+            --hover-bg: rgba(184, 134, 11, 0.2);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.2);
         }
 
         body.dark {
-            --bg-color: #1a1a2e;
+            --bg-color: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             --text-color: #e8e8e8;
-            --card-bg: #252540;
-            --sidebar-bg: #0f0f1a;
-            --sidebar-text: #e8e8e8;
-            --border-color: #3a3a5a;
-            --accent-color: #c9a82e;
-            --accent-light: #8b6914;
-            --header-bg: #0d2b1a;
-            --header-text: #e8d8b0;
-            --hover-bg: #2a2a4a;
+            --card-bg: rgba(30, 30, 50, 0.95);
+            --sidebar-bg: linear-gradient(180deg, #0a0a15 0%, #050510 100%);
+            --sidebar-text: #e8d8b0;
+            --border-color: #d4a853;
+            --accent-color: #d4a853;
+            --accent-light: #ffd700;
+            --hover-bg: rgba(212, 168, 83, 0.2);
+            --glass-bg: rgba(30, 30, 50, 0.5);
         }
 
         body {
-            font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', 'Lateef', serif;
-            background-color: var(--bg-color);
+            font-family: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
+            background: var(--bg-color);
             color: var(--text-color);
             transition: all 0.3s ease;
+            min-height: 100vh;
         }
 
+        /* Header */
         .header {
-            background-color: var(--header-bg);
+            background: var(--header-bg);
             color: var(--header-text);
-            padding: 20px;
+            padding: 20px 20px;
             text-align: center;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .header h1 {
@@ -62,113 +68,131 @@
             letter-spacing: 2px;
         }
 
-        .header p {
-            font-size: 1rem;
-            opacity: 0.9;
+        .header h1 i {
+            margin: 0 8px;
+            color: var(--accent-light);
         }
 
+        .header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 6px;
+        }
+
+        /* Control Bar */
         .control-bar {
-            background-color: var(--card-bg);
-            padding: 12px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 12px;
             flex-wrap: wrap;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--accent-color);
             position: sticky;
-            top: 85px;
+            top: 70px;
             z-index: 99;
         }
 
         .control-btn {
-            background-color: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
             border: none;
-            color: white;
-            padding: 8px 20px;
+            color: #1a1a2e;
+            padding: 6px 16px;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-family: inherit;
+            font-weight: bold;
             transition: all 0.3s ease;
         }
 
         .control-btn:hover {
-            background-color: var(--accent-light);
-            transform: scale(1.02);
+            transform: translateY(-2px);
         }
 
         .font-control {
             display: flex;
             align-items: center;
-            gap: 10px;
-            background-color: var(--bg-color);
-            padding: 5px 15px;
+            gap: 8px;
+            background: var(--card-bg);
+            padding: 4px 12px;
             border-radius: 30px;
         }
 
         .font-control button {
-            background-color: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
             border: none;
-            color: white;
-            width: 35px;
-            height: 35px;
+            color: #1a1a2e;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
         }
 
         .font-size-value {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             min-width: 50px;
             text-align: center;
+            font-weight: bold;
         }
 
         .search-box {
-            background-color: var(--bg-color);
-            padding: 5px 15px;
+            background: var(--card-bg);
+            padding: 4px 15px;
             border-radius: 30px;
             display: flex;
             align-items: center;
+            gap: 6px;
+        }
+
+        .search-box i {
+            color: var(--accent-color);
+            font-size: 0.85rem;
         }
 
         .search-box input {
             background: transparent;
             border: none;
-            padding: 8px;
-            font-size: 0.9rem;
+            padding: 6px;
+            font-size: 0.8rem;
             font-family: inherit;
             color: var(--text-color);
             outline: none;
+            width: 160px;
         }
 
-        .search-box input::placeholder {
-            color: var(--text-color);
-            opacity: 0.6;
-        }
-
+        /* Main Container */
         .main-container {
             display: flex;
-            min-height: calc(100vh - 140px);
+            min-height: calc(100vh - 125px);
         }
 
+        /* Sidebar */
         .sidebar {
-            width: 320px;
-            background-color: var(--sidebar-bg);
+            width: 300px;
+            background: var(--sidebar-bg);
             color: var(--sidebar-text);
             position: sticky;
-            top: 140px;
-            height: calc(100vh - 140px);
+            top: 120px;
+            height: calc(100vh - 120px);
             overflow-y: auto;
-            padding: 20px;
-            border-left: 1px solid var(--border-color);
+            padding: 15px;
+            border-left: 3px solid var(--accent-color);
         }
 
         .sidebar h3 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--accent-color);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .toc-list {
@@ -176,141 +200,216 @@
         }
 
         .toc-list li {
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
 
         .toc-list a {
             color: var(--sidebar-text);
             text-decoration: none;
-            display: block;
-            padding: 6px 12px;
-            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border-radius: 10px;
             transition: all 0.2s;
-            font-size: 0.85rem;
-            border-right: 3px solid transparent;
+            font-size: 0.8rem;
+            border-right: 2px solid transparent;
+        }
+
+        .toc-list a i {
+            width: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-light);
         }
 
         .toc-list a:hover {
-            background-color: rgba(255,255,255,0.1);
+            background: var(--hover-bg);
             border-right-color: var(--accent-color);
         }
 
+        /* Content */
         .content {
             flex: 1;
-            padding: 30px;
+            padding: 25px;
             overflow-y: auto;
         }
 
+        /* Cover Buku */
         .cover {
-            background: linear-gradient(135deg, #1a472a 0%, #0d2b1a 100%);
-            border-radius: 20px;
-            padding: 60px 40px;
+            background: linear-gradient(135deg, #1a472a 0%, #0d2b1a 50%, #1a472a 100%);
+            border-radius: 25px;
+            padding: 40px 30px;
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
             color: #f5e6c8;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        .cover h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .cover h2 {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            font-weight: normal;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
         }
 
         .cover .ornament {
-            font-size: 3rem;
-            margin: 30px 0;
+            font-size: 1.8rem;
+            margin: 15px 0;
             letter-spacing: 10px;
+            color: var(--accent-light);
+        }
+
+        .cover h1 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+        .cover h2 {
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+            font-weight: normal;
         }
 
         .cover p {
-            font-size: 1.2rem;
-            margin-top: 30px;
-            opacity: 0.9;
+            font-size: 1rem;
+            margin-top: 18px;
         }
 
+        /* Section Styling */
         .section {
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 22px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow);
             transition: all 0.3s;
+            border: 1px solid rgba(212, 168, 83, 0.2);
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
         }
 
         .section-title {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             color: var(--accent-color);
             border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+            padding-bottom: 8px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        /* UKURAN FONT ARAB - DIPERBAIKI */
         .arabic-text {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             line-height: 1.8;
             text-align: right;
-            font-family: 'Amiri', 'Traditional Arabic', 'Scheherazade New', serif;
+            font-family: 'Amiri', 'Scheherazade New', serif;
         }
 
         .arabic-text p {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .arabic-text .basmalah {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin: 15px 0;
+            text-align: center;
+            color: var(--accent-color);
         }
 
         .doa-title {
-            font-size: 1.3rem;
-            color: var(--accent-color);
-            margin: 20px 0 10px;
+            font-size: 1.15rem;
+            color: var(--accent-light);
+            margin: 18px 0 12px;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .grid-list {
+        .doa-title i {
+            font-size: 1rem;
+        }
+
+        /* List styling dalam teks Arab */
+        .arabic-text ul, .arabic-text ol {
+            margin: 10px 0;
+            padding-right: 25px;
+        }
+
+        .arabic-text li {
+            margin-bottom: 5px;
+        }
+
+        /* Grid untuk Asmaul Husna */
+        .asma-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 10px;
-            list-style: none;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 8px;
+            margin: 15px 0;
         }
 
-        .grid-list li {
-            padding: 5px 10px;
+        .asma-item {
+            padding: 5px 8px;
             border-bottom: 1px dotted var(--border-color);
+            font-size: 1rem;
         }
 
-        hr {
-            margin: 20px 0;
-            border-color: var(--border-color);
-        }
-
+        /* Loading */
         .loading {
             text-align: center;
             padding: 50px;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
         }
 
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-left: 8px;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Search Highlight */
+        mark {
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #1a1a2e;
+            padding: 1px 5px;
+            border-radius: 12px;
+        }
+
+        .result-info {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-light));
+            color: #1a1a2e;
+            padding: 8px 18px;
+            border-radius: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
 
         ::-webkit-scrollbar-track {
-            background: var(--bg-color);
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
             background: var(--accent-color);
-            border-radius: 4px;
+            border-radius: 10px;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
@@ -320,67 +419,87 @@
                 position: relative;
                 top: 0;
                 height: auto;
-                max-height: 350px;
+                max-height: 300px;
                 border-left: none;
-                border-bottom: 1px solid var(--border-color);
+                border-bottom: 2px solid var(--accent-color);
             }
             .control-bar {
-                top: 70px;
-                flex-direction: column;
-                align-items: center;
+                top: 60px;
             }
             .content {
                 padding: 15px;
             }
+            .cover {
+                padding: 25px 15px;
+            }
             .cover h1 {
-                font-size: 2rem;
+                font-size: 1.6rem;
+            }
+            .cover h2 {
+                font-size: 1.2rem;
             }
             .section-title {
-                font-size: 1.4rem;
+                font-size: 1.2rem;
             }
             .arabic-text {
-                font-size: 1.1rem;
+                font-size: 1rem;
+            }
+            .asma-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .content {
+                padding: 30px 40px;
+            }
+            .arabic-text {
+                font-size: 1.15rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>📖 دُرَّةُ الْهُدَى</h1>
+        <h1><i class="fas fa-star-of-life"></i> دُرَّةُ الْهُدَى <i class="fas fa-star-of-life"></i></h1>
         <p>المجلد الأول - مجموعة الأذكار والأوراد والصلوات والأدعية المأثورة</p>
     </div>
 
     <div class="control-bar">
-        <button class="control-btn" id="themeToggle">🌙 الوضع المظلم / 🌞 الوضع الفاتح</button>
+        <button class="control-btn" id="themeToggle">
+            <i class="fas fa-moon"></i> الوضع المظلم / <i class="fas fa-sun"></i> الوضع الفاتح
+        </button>
         <div class="font-control">
-            <button id="fontMinus">−</button>
-            <span id="fontSizeValue" class="font-size-value">1.3rem</span>
-            <button id="fontPlus">+</button>
+            <button id="fontMinus"><i class="fas fa-minus"></i></button>
+            <span id="fontSizeValue" class="font-size-value">1.1rem</span>
+            <button id="fontPlus"><i class="fas fa-plus"></i></button>
         </div>
         <div class="search-box">
-            <input type="text" id="searchInput" placeholder="🔍 بحث في المحتوى...">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="بحث في المحتوى...">
         </div>
     </div>
 
     <div class="main-container">
         <div class="sidebar">
-            <h3>📑 فهرس المحتويات</h3>
+            <h3><i class="fas fa-book-open"></i> فهرس المحتويات</h3>
             <ul class="toc-list" id="tocList">
-                <li>جاري التحميل...</li>
+                <li><i class="fas fa-spinner fa-pulse"></i> جاري التحميل...</li>
             </ul>
         </div>
 
         <div class="content" id="content">
-            <div class="loading">⏳ جاري تحميل الكتاب...</div>
+            <div class="loading">
+                <i class="fas fa-spinner fa-pulse"></i> جاري تحميل الكتاب...
+            </div>
         </div>
     </div>
 
     <script>
         let bookData = null;
-        let currentFontSize = 1.3;
+        let currentFontSize = 1.1;
         let searchTerm = '';
 
-        // Load JSON data
         async function loadBookData() {
             try {
                 const response = await fetch('data.json');
@@ -390,7 +509,12 @@
                 renderBook();
                 updateFontSize();
             } catch (error) {
-                document.getElementById('content').innerHTML = `<div class="loading" style="color:red;">❌ Gagal memuat data: ${error.message}<br><br>Pastikan file data.json berada di folder yang sama dengan file index.html</div>`;
+                document.getElementById('content').innerHTML = `
+                    <div class="loading" style="color: #dc3545;">
+                        <i class="fas fa-exclamation-triangle"></i><br><br>
+                        ❌ Gagal memuat data: ${error.message}<br><br>
+                        Pastikan file <strong style="color:var(--accent-color)">data.json</strong> berada di folder yang sama
+                    </div>`;
                 console.error(error);
             }
         }
@@ -402,11 +526,11 @@
                 const li = document.createElement('li');
                 const a = document.createElement('a');
                 a.href = `#section-${index}`;
-                a.textContent = `${section.page ? section.page + '. ' : ''}${section.title}`;
+                a.innerHTML = `<i class="fas fa-${index % 2 === 0 ? 'book' : 'leaf'}"></i> ${section.page ? section.page + '. ' : ''}${section.title}`;
                 a.onclick = (e) => {
                     e.preventDefault();
                     const target = document.getElementById(`section-${index}`);
-                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 };
                 li.appendChild(a);
                 tocList.appendChild(li);
@@ -415,11 +539,13 @@
 
         function filterContent() {
             if (!bookData) return;
-            const filteredSections = bookData.sections.filter(section => 
-                searchTerm === '' || 
-                section.title.includes(searchTerm) || 
-                (section.content && section.content.includes(searchTerm))
-            );
+            
+            const filteredSections = searchTerm === '' 
+                ? bookData.sections 
+                : bookData.sections.filter(section => 
+                    section.title.includes(searchTerm) || 
+                    (section.content && section.content.includes(searchTerm))
+                );
             
             const container = document.getElementById('content');
             container.innerHTML = '';
@@ -428,36 +554,41 @@
             const coverDiv = document.createElement('div');
             coverDiv.className = 'cover';
             coverDiv.innerHTML = `
-                <div class="ornament">﴿ ﴾</div>
-                <h1>${bookData.namaKitab}</h1>
-                <h2>${bookData.jilid}</h2>
-                <div class="ornament">★ ✿ ★</div>
+                <div class="ornament"><i class="fas fa-star"></i> <i class="fas fa-star-of-david"></i> <i class="fas fa-star"></i></div>
+                <h1>${bookData.namaKitab || 'دُرَّةُ الْهُدَى'}</h1>
+                <h2>${bookData.jilid || 'المجلد الأول'}</h2>
+                <div class="ornament">﴿ ✿ ﴾</div>
                 <p>${bookData.deskripsi || 'مجموعة الأذكار والأوراد والصلوات والأدعية المأثورة'}</p>
-                <p style="font-size: 1rem; margin-top: 20px;">﴿ رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ ﴾</p>
+                <p style="font-size: 0.85rem; margin-top: 18px;">
+                    <i class="fas fa-pray"></i> رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ <i class="fas fa-pray"></i>
+                </p>
             `;
             container.appendChild(coverDiv);
             
             if (searchTerm !== '') {
                 const resultInfo = document.createElement('div');
-                resultInfo.style.cssText = 'background:var(--accent-color);color:white;padding:10px;border-radius:10px;margin-bottom:20px;text-align:center';
-                resultInfo.innerHTML = `🔍 نتائج البحث عن: "${searchTerm}" - ditemukan ${filteredSections.length} bagian`;
+                resultInfo.className = 'result-info';
+                resultInfo.innerHTML = `<i class="fas fa-search"></i> نتائج البحث عن: "${searchTerm}" - ditemukan ${filteredSections.length} bagian`;
                 container.appendChild(resultInfo);
             }
             
             filteredSections.forEach((section, idx) => {
                 const originalIndex = bookData.sections.findIndex(s => s.id === section.id);
                 const sectionDiv = document.createElement('div');
-                sectionDiv.id = `section-${originalIndex}`;
+                sectionDiv.id = `section-${originalIndex !== -1 ? originalIndex : idx}`;
                 sectionDiv.className = 'section';
                 
                 let contentHtml = section.content;
                 if (searchTerm !== '') {
-                    const regex = new RegExp(`(${searchTerm})`, 'gi');
-                    contentHtml = contentHtml.replace(regex, '<mark style="background:#c9a82e;color:#1a1a2e;padding:2px 5px;border-radius:5px;">$1</mark>');
+                    const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                    contentHtml = contentHtml.replace(regex, '<mark>$1</mark>');
                 }
                 
                 sectionDiv.innerHTML = `
-                    <h2 class="section-title">${section.page ? `(${section.page}) ` : ''}${section.title}</h2>
+                    <h2 class="section-title">
+                        <i class="fas fa-${originalIndex % 3 === 0 ? 'quran' : (originalIndex % 3 === 1 ? 'pray' : 'peace')}"></i>
+                        ${section.page ? `(${section.page}) ` : ''}${section.title}
+                    </h2>
                     <div class="arabic-text">${contentHtml}</div>
                 `;
                 container.appendChild(sectionDiv);
@@ -495,13 +626,13 @@
             
             document.getElementById('themeToggle').addEventListener('click', toggleTheme);
             document.getElementById('fontPlus').addEventListener('click', () => {
-                if (currentFontSize < 2.2) {
+                if (currentFontSize < 2.0) {
                     currentFontSize += 0.1;
                     updateFontSize();
                 }
             });
             document.getElementById('fontMinus').addEventListener('click', () => {
-                if (currentFontSize > 0.9) {
+                if (currentFontSize > 0.8) {
                     currentFontSize -= 0.1;
                     updateFontSize();
                 }
@@ -509,7 +640,7 @@
             
             const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('input', (e) => {
-                searchTerm = e.target.value;
+                searchTerm = e.target.value.trim();
                 filterContent();
             });
         });
