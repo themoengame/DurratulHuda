@@ -5,32 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Durrat al-Huda - Digital Library</title>
     
-    <!-- Google Fonts: 10 Font Arab -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
+    <!-- Google Fonts (Font Arab berkualitas) -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Harmattan:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Mirza:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Fustat:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Lateef:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.2s ease;
-        }
-
-        body {
-            font-family: 'Noto Naskh Arabic', 'Amiri', serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.8;
-            direction: rtl;
         }
 
         /* Variabel Tema */
@@ -44,9 +34,10 @@
             --hover-bg: #e9ecef;
             --accent: #2c7da0;
             --accent-dark: #1f5068;
+            --accent-light: #e8f4f8;
             --shadow: rgba(0, 0, 0, 0.1);
             --card-bg: #ffffff;
-            --navbar-bg: #ffffff;
+            --toolbar-bg: #ffffff;
         }
 
         body.dark {
@@ -59,32 +50,44 @@
             --hover-bg: #2a2a2a;
             --accent: #4ea8de;
             --accent-dark: #2c7da0;
+            --accent-light: #1e3a4a;
             --shadow: rgba(0, 0, 0, 0.3);
             --card-bg: #252525;
-            --navbar-bg: #1e1e1e;
+            --toolbar-bg: #1e1e1e;
         }
 
-        /* Layout */
+        body {
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            transition: background-color 0.3s ease, color 0.2s ease;
+        }
+
+        /* Layout Utama */
         .app {
             display: flex;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
         }
 
-        /* Sidebar Daftar Isi */
+        /* Sidebar - Menu Daftar Isi */
         .sidebar {
             width: 320px;
             background-color: var(--sidebar-bg);
             border-left: 1px solid var(--border);
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            box-shadow: -2px 0 5px var(--shadow);
-            z-index: 10;
+            position: fixed;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 100;
+            transform: translateX(0);
             transition: transform 0.3s ease;
+            box-shadow: -2px 0 5px var(--shadow);
         }
 
-        .sidebar.hide {
+        .sidebar.closed {
             transform: translateX(100%);
         }
 
@@ -99,7 +102,17 @@
             font-weight: bold;
             color: var(--accent);
             margin-bottom: 0.5rem;
-            text-align: center;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
         }
 
         .daftar-isi {
@@ -137,38 +150,41 @@
         /* Main Content */
         .main-content {
             flex: 1;
+            margin-right: 320px;
+            transition: margin-right 0.3s ease;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
         }
 
-        /* Navbar / Toolbar */
-        .navbar {
+        .main-content.fullscreen {
+            margin-right: 0;
+        }
+
+        /* Toolbar */
+        .toolbar {
             padding: 0.75rem 1.5rem;
-            background-color: var(--navbar-bg);
+            background-color: var(--toolbar-bg);
             border-bottom: 1px solid var(--border);
             display: flex;
-            gap: 1rem;
+            gap: 0.75rem;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            transition: transform 0.3s ease;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background-color: rgba(var(--toolbar-bg-rgb, 255,255,255), 0.95);
         }
 
-        .navbar.hide {
-            transform: translateY(-100%);
-        }
-
-        .navbar-brand {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--accent);
-            letter-spacing: 1px;
+        body.dark .toolbar {
+            background-color: rgba(30, 30, 30, 0.95);
         }
 
         .toolbar-group {
             display: flex;
-            gap: 0.75rem;
+            gap: 0.5rem;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -182,10 +198,39 @@
             cursor: pointer;
             font-family: inherit;
             font-size: 0.85rem;
+            transition: all 0.2s;
         }
 
         .toolbar button:hover {
             background: var(--hover-bg);
+        }
+
+        .btn-icon {
+            font-size: 1.1rem;
+            padding: 0.4rem 0.6rem;
+        }
+
+        .menu-toggle {
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .menu-toggle:hover {
+            background: var(--accent-dark);
+        }
+
+        .theme-toggle {
+            background: var(--accent);
+            color: white;
+            border: none;
+        }
+
+        .fullscreen-toggle {
+            background: var(--accent);
+            color: white;
+            border: none;
         }
 
         .font-size-control {
@@ -197,15 +242,11 @@
         .font-size-control span {
             font-size: 0.8rem;
             padding: 0 0.25rem;
+            min-width: 45px;
+            text-align: center;
         }
 
-        .theme-toggle, .sidebar-toggle {
-            background: var(--accent);
-            color: white;
-            border: none;
-        }
-
-        /* Konten Isi */
+        /* Content Area */
         .content-area {
             flex: 1;
             overflow-y: auto;
@@ -216,9 +257,9 @@
             max-width: 900px;
             margin: 0 auto;
             background-color: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 2rem;
-            box-shadow: 0 2px 8px var(--shadow);
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
         .content-title {
@@ -244,6 +285,18 @@
             margin-bottom: 1rem;
         }
 
+        .arabic-content table {
+            width: 100%;
+            margin: 1rem 0;
+            border-collapse: collapse;
+        }
+
+        .arabic-content td {
+            border: 1px solid var(--border);
+            padding: 0.5rem;
+            text-align: center;
+        }
+
         .loading {
             text-align: center;
             padding: 2rem;
@@ -251,40 +304,16 @@
             color: var(--text-secondary);
         }
 
-        /* Tombol toggle sidebar (floating) */
-        .toggle-sidebar-btn {
-            position: fixed;
-            top: 80px;
-            right: 10px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 20;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px var(--shadow);
-            transition: all 0.2s;
-        }
-
-        .toggle-sidebar-btn:hover {
-            background: var(--accent-dark);
-            transform: scale(1.05);
-        }
-
         /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: var(--bg-primary);
         }
+
         ::-webkit-scrollbar-thumb {
             background: var(--border);
             border-radius: 4px;
@@ -292,73 +321,124 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .app {
-                flex-direction: column;
-            }
             .sidebar {
-                width: 100%;
-                height: 50%;
-                position: fixed;
-                bottom: 0;
-                right: 0;
-                left: 0;
-                z-index: 15;
-                border-left: none;
-                border-top: 1px solid var(--border);
-            }
-            .sidebar.hide {
-                transform: translateY(100%);
+                width: 280px;
             }
             .main-content {
-                height: 100%;
+                margin-right: 0;
             }
-            .navbar {
+            .toolbar {
                 padding: 0.5rem;
+                gap: 0.5rem;
+            }
+            .toolbar-group {
+                gap: 0.3rem;
+            }
+            .toolbar button, .toolbar select {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.75rem;
             }
             .content-card {
                 padding: 1rem;
             }
-            .toggle-sidebar-btn {
-                top: auto;
-                bottom: 20px;
-                right: 20px;
+            .content-title {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Fullscreen mode khusus untuk bacaan - toolbar tetap ada tapi minimalis */
+        .reading-mode .sidebar {
+            transform: translateX(100%);
+        }
+        
+        .reading-mode .main-content {
+            margin-right: 0;
+        }
+        
+        .reading-mode .toolbar {
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        
+        .reading-mode .toolbar:hover {
+            opacity: 1;
+        }
+
+        /* Highlight search */
+        .highlight {
+            background-color: #ffc107;
+            color: #1e1e1e;
+            border-radius: 2px;
+            padding: 0 2px;
+        }
+        body.dark .highlight {
+            background-color: #ffb300;
+            color: #000;
+        }
+
+        /* Tombol close sidebar di mobile */
+        .sidebar-close {
+            display: none;
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-close {
+                display: block;
             }
         }
     </style>
 </head>
 <body>
 <div class="app">
+    <!-- Sidebar Menu -->
     <div class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarCloseBtn">✕</button>
         <div class="sidebar-header">
             <h2>📖 درة الهدى</h2>
+            <input type="text" id="searchInput" class="search-box" placeholder="🔍 Cari judul..." autocomplete="off">
         </div>
         <div class="daftar-isi" id="daftarIsi">
             <div class="loading">Memuat daftar...</div>
         </div>
     </div>
-    <div class="main-content">
-        <div class="navbar" id="navbar">
-            <div class="navbar-brand">تدرة الهدى</div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <div class="toolbar">
+            <div class="toolbar-group">
+                <button id="menuToggleBtn" class="menu-toggle btn-icon" title="Tampilkan Menu">📑 Menu</button>
+                <button id="fullscreenToggleBtn" class="fullscreen-toggle btn-icon" title="Mode Membaca (Fullscreen)">📖 Fullscreen</button>
+                <button id="themeToggle" class="theme-toggle btn-icon" title="Gelap/Terang">🌓</button>
+            </div>
             <div class="toolbar-group">
                 <select id="fontFamilySelect">
-                    <option value="'Noto Naskh Arabic', serif">📜 Noto Naskh Arabic</option>
-                    <option value="'Noto Kufi Arabic', serif">🏛️ Noto Kufi Arabic</option>
-                    <option value="'Noto Sans Arabic', sans-serif">📝 Noto Sans Arabic</option>
-                    <option value="'Amiri', serif">🖋️ Amiri</option>
-                    <option value="'Cairo', sans-serif">🌆 Cairo</option>
-                    <option value="'Scheherazade New', serif">📖 Scheherazade New</option>
-                    <option value="'Harmattan', sans-serif">✍️ Harmattan</option>
-                    <option value="'Tajawal', sans-serif">✨ Tajawal</option>
-                    <option value="'Mirza', serif">🎨 Mirza</option>
-                    <option value="'Fustat', sans-serif">🔮 Fustat</option>
+                    <option value="'Amiri', serif">📜 Amiri</option>
+                    <option value="'Scheherazade New', serif">🖋️ Scheherazade</option>
+                    <option value="'Lateef', cursive">✍️ Lateef</option>
+                    <option value="'Noto Naskh Arabic', serif">📖 Noto Naskh</option>
+                    <option value="'El Messiri', sans-serif">✨ El Messiri</option>
+                    <option value="'Reem Kufi', sans-serif">🔤 Reem Kufi</option>
+                    <option value="'Cairo', sans-serif">📚 Cairo</option>
+                    <option value="'Tajawal', sans-serif">🍃 Tajawal</option>
+                    <option value="'Almarai', sans-serif">🌙 Almarai</option>
+                    <option value="'Traditional Arabic', 'Times New Roman', serif">📜 Traditional</option>
                 </select>
                 <div class="font-size-control">
                     <button id="fontMinus" title="Kecilkan font">A-</button>
-                    <span id="fontSizeLabel">18px</span>
+                    <span id="fontSizeLabel">20px</span>
                     <button id="fontPlus" title="Besarkan font">A+</button>
                 </div>
-                <button id="themeToggle" class="theme-toggle">🌓 Dark/Light</button>
-                <button id="hideNavbarBtn" class="sidebar-toggle">⬆️ Sembunyi</button>
             </div>
         </div>
         <div class="content-area" id="contentArea">
@@ -369,20 +449,22 @@
         </div>
     </div>
 </div>
-<button class="toggle-sidebar-btn" id="toggleSidebarBtn" title="Tampil/Sembunyi Daftar Isi">📑</button>
 
 <script>
     // State
     let menuData = [];
     let contentCache = {};
     let currentId = null;
-    let currentFontSize = 18;
-    let currentFontFamily = "'Noto Naskh Arabic', serif";
-    let sidebarVisible = true;
-    let navbarVisible = true;
+    let currentFontSize = 20;
+    let currentFontFamily = "'Amiri', serif";
+    let isReadingMode = false;
+    let isSidebarOpen = true;
 
     // DOM Elements
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
     const daftarContainer = document.getElementById('daftarIsi');
+    const searchInput = document.getElementById('searchInput');
     const contentTitleDiv = document.getElementById('contentTitle');
     const contentBodyDiv = document.getElementById('contentBody');
     const fontPlusBtn = document.getElementById('fontPlus');
@@ -390,10 +472,9 @@
     const fontSizeLabel = document.getElementById('fontSizeLabel');
     const fontFamilySelect = document.getElementById('fontFamilySelect');
     const themeToggle = document.getElementById('themeToggle');
-    const toggleSidebarBtn = document.getElementById('toggleSidebarBtn');
-    const hideNavbarBtn = document.getElementById('hideNavbarBtn');
-    const sidebar = document.getElementById('sidebar');
-    const navbar = document.getElementById('navbar');
+    const menuToggleBtn = document.getElementById('menuToggleBtn');
+    const fullscreenToggleBtn = document.getElementById('fullscreenToggleBtn');
+    const sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
 
     // Load data.json
     async function loadData() {
@@ -408,18 +489,25 @@
             }
         } catch (error) {
             console.error(error);
-            daftarContainer.innerHTML = '<div class="loading">Gagal memuat daftar isi. Pastikan data.json tersedia.</div>';
+            daftarContainer.innerHTML = '<div class="loading">❌ Gagal memuat daftar isi. Pastikan data.json tersedia.</div>';
         }
     }
 
-    // Render menu
+    // Render menu with search filter
     function renderMenu(items) {
-        if (items.length === 0) {
-            daftarContainer.innerHTML = '<div class="loading">Tidak ada data</div>';
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        let filtered = items;
+        if (searchTerm) {
+            filtered = items.filter(item => item.title.toLowerCase().includes(searchTerm));
+        }
+
+        if (filtered.length === 0) {
+            daftarContainer.innerHTML = '<div class="loading">Tidak ditemukan</div>';
             return;
         }
+
         const ul = document.createElement('ul');
-        items.forEach(item => {
+        filtered.forEach(item => {
             const li = document.createElement('li');
             li.textContent = item.title;
             li.dataset.id = item.id;
@@ -428,6 +516,10 @@
                 loadContent(item.id);
                 document.querySelectorAll('#daftarIsi li').forEach(el => el.classList.remove('active'));
                 li.classList.add('active');
+                // Di mobile, tutup sidebar setelah klik
+                if (window.innerWidth <= 768) {
+                    closeSidebar();
+                }
             });
             ul.appendChild(li);
         });
@@ -488,7 +580,7 @@
     function changeFontSize(delta) {
         let newSize = currentFontSize + delta;
         if (newSize < 12) newSize = 12;
-        if (newSize > 36) newSize = 36;
+        if (newSize > 40) newSize = 40;
         currentFontSize = newSize;
         applyFontSettings();
         localStorage.setItem('dh_fontSize', currentFontSize);
@@ -516,30 +608,52 @@
         localStorage.setItem('dh_theme', isDark ? 'dark' : 'light');
     }
 
-    // Toggle Sidebar
+    // Sidebar Toggle
     function toggleSidebar() {
-        sidebarVisible = !sidebarVisible;
-        if (sidebarVisible) {
-            sidebar.classList.remove('hide');
-            toggleSidebarBtn.innerHTML = '📑';
+        isSidebarOpen = !isSidebarOpen;
+        if (isSidebarOpen) {
+            sidebar.classList.remove('closed');
+            mainContent.classList.remove('fullscreen');
         } else {
-            sidebar.classList.add('hide');
-            toggleSidebarBtn.innerHTML = '📖';
+            sidebar.classList.add('closed');
+            mainContent.classList.add('fullscreen');
         }
-        localStorage.setItem('dh_sidebar', sidebarVisible);
+        localStorage.setItem('dh_sidebarOpen', isSidebarOpen);
     }
 
-    // Toggle Navbar
-    function toggleNavbar() {
-        navbarVisible = !navbarVisible;
-        if (navbarVisible) {
-            navbar.classList.remove('hide');
-            hideNavbarBtn.innerHTML = '⬆️ Sembunyi';
+    function closeSidebar() {
+        isSidebarOpen = false;
+        sidebar.classList.add('closed');
+        mainContent.classList.add('fullscreen');
+        localStorage.setItem('dh_sidebarOpen', false);
+    }
+
+    function openSidebar() {
+        isSidebarOpen = true;
+        sidebar.classList.remove('closed');
+        mainContent.classList.remove('fullscreen');
+        localStorage.setItem('dh_sidebarOpen', true);
+    }
+
+    // Fullscreen Reading Mode (clean interface)
+    function toggleReadingMode() {
+        isReadingMode = !isReadingMode;
+        if (isReadingMode) {
+            document.body.classList.add('reading-mode');
+            fullscreenToggleBtn.innerHTML = '📖 Exit';
+            fullscreenToggleBtn.title = 'Keluar Mode Membaca';
+            closeSidebar();
         } else {
-            navbar.classList.add('hide');
-            hideNavbarBtn.innerHTML = '⬇️ Tampil';
+            document.body.classList.remove('reading-mode');
+            fullscreenToggleBtn.innerHTML = '📖 Fullscreen';
+            fullscreenToggleBtn.title = 'Mode Membaca';
+            // Restore sidebar preference
+            const savedSidebar = localStorage.getItem('dh_sidebarOpen');
+            if (savedSidebar === 'true') {
+                openSidebar();
+            }
         }
-        localStorage.setItem('dh_navbar', navbarVisible);
+        localStorage.setItem('dh_readingMode', isReadingMode);
     }
 
     // Load preferences
@@ -551,17 +665,18 @@
             currentFontFamily = savedFamily;
             fontFamilySelect.value = savedFamily;
         }
-        const savedSidebar = localStorage.getItem('dh_sidebar');
+        const savedSidebar = localStorage.getItem('dh_sidebarOpen');
         if (savedSidebar === 'false') {
-            sidebarVisible = false;
-            sidebar.classList.add('hide');
-            toggleSidebarBtn.innerHTML = '📖';
+            isSidebarOpen = false;
+            sidebar.classList.add('closed');
+            mainContent.classList.add('fullscreen');
         }
-        const savedNavbar = localStorage.getItem('dh_navbar');
-        if (savedNavbar === 'false') {
-            navbarVisible = false;
-            navbar.classList.add('hide');
-            hideNavbarBtn.innerHTML = '⬇️ Tampil';
+        const savedReadingMode = localStorage.getItem('dh_readingMode');
+        if (savedReadingMode === 'true') {
+            isReadingMode = true;
+            document.body.classList.add('reading-mode');
+            fullscreenToggleBtn.innerHTML = '📖 Exit';
+            closeSidebar();
         }
         applyFontSettings();
         initTheme();
@@ -570,12 +685,14 @@
     // Event Listeners
     fontPlusBtn.addEventListener('click', () => changeFontSize(2));
     fontMinusBtn.addEventListener('click', () => changeFontSize(-2));
-    fontFamilySelect.addEventListener('change', (e) => {
-        setFontFamily(e.target.value);
-    });
+    fontFamilySelect.addEventListener('change', (e) => setFontFamily(e.target.value));
     themeToggle.addEventListener('click', toggleTheme);
-    toggleSidebarBtn.addEventListener('click', toggleSidebar);
-    hideNavbarBtn.addEventListener('click', toggleNavbar);
+    menuToggleBtn.addEventListener('click', toggleSidebar);
+    fullscreenToggleBtn.addEventListener('click', toggleReadingMode);
+    if (sidebarCloseBtn) {
+        sidebarCloseBtn.addEventListener('click', closeSidebar);
+    }
+    searchInput.addEventListener('input', () => renderMenu(menuData));
 
     // Initialize
     loadPreferences();
